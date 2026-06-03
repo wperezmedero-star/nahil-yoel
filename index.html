@@ -77,9 +77,13 @@ to{transform:translate(40px,30px) scale(1.15)}}
   flex-shrink:0;
 }
 @media(orientation:landscape){
-  .hero{ flex-direction:row; min-height:100svh; }
+  .hero{ flex-direction:row; min-height:100svh; padding-top:0; }
   .hero-photo{ width:55%; height:100svh; background-position:center 40%; }
-  .hero-panel{ width:45%; justify-content:center; padding:30px 4vw; }
+  .hero-panel{ width:45%; justify-content:center; padding:80px 4vw 30px; overflow-y:auto; }
+}
+/* Tablet portrait: dar espacio al nav fixed */
+@media(min-width:601px) and (orientation:portrait){
+  .hero-photo{ margin-top:72px; height:calc(72svh - 72px); }
 }
 @media(max-width:600px){
   .hero-photo{ height:55svh; background-position:center 50%; }
@@ -154,10 +158,25 @@ section{padding:100px 8vw}
 .story-section{background:white}
 .story-section .section-title{margin-bottom:60px}
 .timeline{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
-.story-card{border-radius:32px;overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid rgba(201,167,232,.2);transition:transform .3s,box-shadow .3s}
-.story-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lila)}
-.story-card .img-wrap{overflow:hidden;height:340px}
-.story-card .img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.story-card{
+  border-radius:32px;overflow:hidden;
+  box-shadow:var(--shadow-soft);
+  border:1px solid rgba(201,167,232,.2);
+  transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s;
+  position:relative;
+}
+.story-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:var(--shadow-lila)}
+/* Línea decorativa lila al hover */
+.story-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--lila),var(--sky));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.22,1,.36,1);
+  z-index:1;
+}
+.story-card:hover::before{transform:scaleX(1)}
+.story-card .img-wrap{overflow:hidden;height:320px;background:var(--lila-soft)}
+.story-card .img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .6s cubic-bezier(.22,1,.36,1)}
 .story-card:hover .img-wrap img{transform:scale(1.07)}
 .story-card-body{padding:28px 30px;background:white}
 .story-num{font-size:11px;font-weight:800;letter-spacing:.25em;color:var(--lila-deep)}
@@ -208,7 +227,7 @@ section{padding:100px 8vw}
 }
 .photo-grid .img-wrap:hover::after{ opacity:1; }
 .photo-grid .img-wrap img{
-  width:100%;height:100%;object-fit:cover;display:block;
+  width:100%;height:100%;object-fit:cover;object-position:center top;display:block;
   transition:transform .5s cubic-bezier(.22,1,.36,1);
 }
 .photo-grid .img-wrap:hover img{ transform:scale(1.08); }
@@ -407,7 +426,7 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
 <section id="historia" class="story-section reveal">
   <span class="section-tag" data-es="Nuestra historia" data-en="Our story">Nuestra historia</span>
   <h2 class="section-title">Momentos que nos <em>trajeron aquí</em></h2>
-  <div class="timeline stagger">
+  <div class="timeline stagger" id="storyTimeline">
     <div class="story-card">
       <div class="img-wrap"><img src="assets/sofa.jpg" alt="Juntos"/></div>
       <div class="story-card-body">
@@ -696,11 +715,21 @@ function submitRSVP(e){
 
 // pétalos eliminados
 
-// SCROLL REVEAL
+// SCROLL REVEAL + PARALLAX STORY
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
 }),{threshold:0.1});
 document.querySelectorAll('.reveal,.stagger').forEach(el=>obs.observe(el));
+
+// Parallax suave en imágenes de story al scroll
+window.addEventListener('scroll', function(){
+  document.querySelectorAll('.story-card .img-wrap img').forEach(function(img){
+    const rect = img.closest('.story-card').getBoundingClientRect();
+    const center = rect.top + rect.height/2 - window.innerHeight/2;
+    const offset = center * 0.06;
+    img.style.transform = 'translateY('+offset+'px) scale(1.06)';
+  });
+}, {passive:true});
 
 // TYPEWRITER NAHIL & YOEL
 (function(){
