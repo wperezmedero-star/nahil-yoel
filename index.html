@@ -64,71 +64,43 @@ body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);over
 
 /* HERO */
 .hero{
-  min-height:100svh;
   display:flex;
   flex-direction:column;
+  min-height:100svh;
   overflow:hidden;
-  position:relative;
 }
-/* FOTO — ocupa 62% de la pantalla, sin texto encima */
-.hero-bg{
+/* FOTO PURA — 58% altura, CERO texto encima */
+.hero-photo{
   width:100%;
-  height:62svh;
-  background:url('assets/hero.jpg') center 18%/cover no-repeat;
+  height:58svh;
+  background:url('assets/hero.jpg') center 20%/cover no-repeat;
   flex-shrink:0;
-  position:relative;
 }
-/* Degradado sutil solo en la parte baja de la foto */
-.hero-bg::after{
-  content:'';
-  position:absolute;
-  bottom:0;left:0;right:0;
-  height:80px;
-  background:linear-gradient(to top, #1a0d2e, transparent);
-}
-.hero-overlay{display:none}
-.hero-tulip{display:none}
-/* INFO — bloque inferior con fondo elegante */
-.hero-content{
+/* PANEL inferior — toda la información */
+.hero-panel{
   flex:1;
-  background:linear-gradient(135deg,#1a0d2e 0%,#0f1a3a 100%);
+  background:linear-gradient(160deg,#1e0d35 0%,#102040 100%);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:24px 6vw 28px;
   text-align:center;
+  padding:20px 6vw 24px;
   color:white;
-  position:relative;
-  z-index:2;
-}
-.hero-names{
-  text-align:center;
-  animation:hero-in 1.2s .3s ease both;
-  opacity:0;
-  animation-fill-mode:forwards;
-}
-.hero-bottom{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
   gap:10px;
-  margin-top:14px;
-  width:100%;
-  animation:hero-in 1.2s .7s ease both;
-  opacity:0;
-  animation-fill-mode:forwards;
 }
+/* Ocultar elementos del viejo hero */
+.hero-bg,.hero-overlay,.hero-tulip,.aurora,.hero-content,.hero-names,.hero-bottom{display:none}
 @keyframes hero-in{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
-.hero-eyebrow{font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--lila);margin-bottom:8px;display:block;opacity:.85;text-align:center}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(44px,8vw,72px);line-height:.92;font-weight:700;text-shadow:0 4px 24px rgba(0,0,0,.4);margin:0;text-align:center}
+.hero-eyebrow{font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--lila);display:block;opacity:.85}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,7vw,64px);line-height:1;font-weight:700;margin:0;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
 .hero h1 em{font-style:italic;color:var(--lila)}
-.hero-verse{font-family:'Playfair Display',serif;font-size:clamp(11px,1.3vw,14px);line-height:1.5;font-style:italic;max-width:500px;margin:10px auto 0;opacity:.80;text-align:center}
+.hero-verse{font-family:'Playfair Display',serif;font-size:clamp(11px,1.2vw,13px);line-height:1.55;font-style:italic;max-width:480px;opacity:.78;text-align:center;margin:0}
 .hero-verse cite{font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;display:block;margin-top:10px;color:var(--lila);font-style:normal}
-.hero-date{display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:center;margin:0}
+.hero-date{display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:center}
 .hero-date span,.hero-date strong{padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);font-size:12px}
 .hero-date strong{font-weight:700;background:rgba(201,167,232,.25)}
-.hero-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:2px}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:999px;font:600 14px/1 'Jost',sans-serif;letter-spacing:.06em;text-decoration:none;border:none;cursor:pointer;transition:transform .25s,box-shadow .25s}
@@ -137,6 +109,7 @@ body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);over
 .btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.45) 50%,transparent 60%);animation:shimmer 2.5s ease-in-out infinite}
 @keyframes shimmer{0%{transform:translateX(-100%)}60%,100%{transform:translateX(200%)}}
 .btn-outline{background:rgba(255,255,255,.14);color:white;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(10px)}
+.btn-outline-dark{background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:999px;font:600 14px/1 'Jost',sans-serif;letter-spacing:.06em;text-decoration:none;cursor:pointer;transition:transform .25s}
 .btn-lila{background:var(--lila-pale);color:var(--lila-deep);border:1px solid rgba(166,122,204,.3)}
 .btn-lila:hover{box-shadow:0 14px 40px rgba(160,100,220,.25)}
 
@@ -319,38 +292,33 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
   </div>
 </div>
 
-<!-- HERO -->
+<!-- HERO: FOTO PURA + PANEL INFERIOR -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="aurora" id="aurora"></div>
-  <div class="hero-tulip"><img src="assets/tulip_single.png" alt="tulipán"/></div>
-  <div class="hero-content">
-    <!-- Nombres arriba a la derecha -->
-    <div class="hero-names">
-      <span class="hero-eyebrow" data-es="Celebrando nuestro amor · 21 de agosto, 2026" data-en="Celebrating our love · August 21, 2026">Celebrando nuestro amor · 21 de agosto, 2026</span>
-      <h1>
-        <span class="typewriter" id="tw-nahil"></span><br>
-        <em class="tw-amp" id="tw-amp">&</em><br>
-        <span class="typewriter" id="tw-yoel"></span>
-      </h1>
+  <!-- FOTO: sin ningún texto encima -->
+  <div class="hero-photo"></div>
+
+  <!-- PANEL: toda la info debajo -->
+  <div class="hero-panel">
+    <span class="hero-eyebrow" data-es="Celebrando nuestro amor" data-en="Celebrating our love">Celebrando nuestro amor</span>
+    <h1>
+      <span class="typewriter" id="tw-nahil"></span>
+      <em class="tw-amp" id="tw-amp">&</em>
+      <span class="typewriter" id="tw-yoel"></span>
+    </h1>
+    <p class="hero-verse">
+      "Las aguas embravecidas no pueden extinguir el amor,
+      ni pueden los ríos llevárselo con la corriente."
+      <cite>— Cantares 8:7</cite>
+    </p>
+    <div class="hero-date">
+      <span data-es="Viernes" data-en="Friday">Viernes</span>
+      <strong>21 · VIII · 2026</strong>
+      <span>1:00 p.m.</span>
+      <span data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</span>
     </div>
-    <!-- Versículo + fecha + botones abajo al centro -->
-    <div class="hero-bottom">
-      <p class="hero-verse">
-        "Las aguas embravecidas no pueden extinguir el amor,<br>ni pueden los ríos llevárselo con la corriente."
-        <cite>Cantares 8:7</cite>
-      </p>
-      <div class="hero-date">
-        <span data-es="Viernes" data-en="Friday">Viernes</span>
-        <strong>21 · VIII · 2026</strong>
-        <span>1:00 p.m.</span>
-        <span data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</span>
-      </div>
-      <div class="hero-actions">
-        <a href="#rsvp" class="btn btn-primary" data-es="Confirmar asistencia" data-en="RSVP Now">Confirmar asistencia</a>
-        <a href="#fotos" class="btn btn-outline" data-es="Compartir fotos" data-en="Share Photos">Compartir fotos</a>
-      </div>
+    <div class="hero-actions">
+      <a href="#rsvp" class="btn btn-primary" data-es="Confirmar asistencia" data-en="RSVP Now">Confirmar asistencia</a>
+      <a href="#fotos" class="btn btn-outline-dark" data-es="Compartir fotos" data-en="Share Photos">Compartir fotos</a>
     </div>
   </div>
 </section>
@@ -713,7 +681,7 @@ function submitRSVP(e){
       '--r2:'+c.r2,
     ].join(';');
     el.innerHTML = PETALS[i % PETALS.length];
-    document.querySelector('.hero').appendChild(el);
+    document.querySelector('.hero-photo') && document.querySelector('.hero-photo').appendChild(el);
   });
 })();
 
@@ -722,7 +690,7 @@ function submitRSVP(e){
 // AURORA
 (function(){
   const a=document.getElementById('aurora');
-  if(!a)return;
+  if(!a || !a.parentNode)return;
   [{color:'rgba(180,120,255,.35)',size:500,x:'10%',y:'15%',dur:8},
    {color:'rgba(100,180,255,.28)',size:400,x:'65%',y:'60%',dur:11},
    {color:'rgba(230,170,255,.22)',size:350,x:'40%',y:'80%',dur:9}
