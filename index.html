@@ -274,7 +274,11 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
   <div class="hero-tulip"><img src="assets/tulip_single.png" alt="tulipán"/></div>
   <div class="hero-content">
     <span class="hero-eyebrow" data-es="Celebrando nuestro amor · 21 de agosto, 2026" data-en="Celebrating our love · August 21, 2026">Celebrando nuestro amor · 21 de agosto, 2026</span>
-    <h1>Nahil<br><em>&</em><br>Yoel</h1>
+    <h1>
+      <span class="typewriter" id="tw-nahil"></span><br>
+      <em class="tw-amp" id="tw-amp" style="opacity:0">&</em><br>
+      <span class="typewriter" id="tw-yoel"></span>
+    </h1>
     <p class="hero-verse">
       "Las aguas embravecidas no pueden extinguir el amor,<br>ni pueden los ríos llevárselo con la corriente."
       <cite>Cantares 8:7</cite>
@@ -676,6 +680,44 @@ const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
 }),{threshold:0.1});
 document.querySelectorAll('.reveal,.stagger').forEach(el=>obs.observe(el));
+
+// TYPEWRITER NAHIL & YOEL
+(function(){
+  function typeWrite(el, text, speed, onDone) {
+    var i = 0;
+    el.textContent = '';
+    function tick() {
+      if (i < text.length) {
+        el.textContent += text[i];
+        i++;
+        setTimeout(tick, speed + Math.random() * 40);
+      } else {
+        el.classList.add('done');
+        if (onDone) onDone();
+      }
+    }
+    setTimeout(tick, 200);
+  }
+
+  window.addEventListener('load', function(){
+    var nahil = document.getElementById('tw-nahil');
+    var amp   = document.getElementById('tw-amp');
+    var yoel  = document.getElementById('tw-yoel');
+
+    // Primero Nahil (velocidad 110ms por letra)
+    typeWrite(nahil, 'Nahil', 110, function(){
+      // Aparece el & con fade
+      setTimeout(function(){
+        amp.classList.add('show');
+        // Luego Yoel
+        setTimeout(function(){
+          typeWrite(yoel, 'Yoel', 110, null);
+        }, 400);
+      }, 300);
+    });
+  });
+})();
+
 </script>
 </body>
 </html>
