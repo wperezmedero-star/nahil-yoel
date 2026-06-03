@@ -43,7 +43,7 @@ body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);over
 .lang-btn:hover{background:var(--lila-pale)}
 
 /* MUSIC PLAYER */
-.music-player{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:999px;background:rgba(255,250,255,.95);backdrop-filter:blur(20px);box-shadow:var(--shadow-lila);border:1px solid rgba(201,167,232,.4);animation:slide-up .8s 1.5s ease both}
+.music-player{position:fixed;bottom:24px;left:24px;z-index:200;display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:999px;background:rgba(255,250,255,.95);backdrop-filter:blur(20px);box-shadow:var(--shadow-lila);border:1px solid rgba(201,167,232,.4);animation:slide-up .8s 1.5s ease both}
 @keyframes slide-up{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
 .play-btn{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--lila),var(--sky));border:none;cursor:pointer;display:grid;place-items:center;transition:transform .2s;box-shadow:0 0 0 0 rgba(201,167,232,.7)}
 .play-btn:hover{transform:scale(1.1)}
@@ -68,17 +68,19 @@ body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);over
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(28,12,42,.78) 0%,rgba(60,30,90,.45) 40%,rgba(100,160,220,.12) 100%),linear-gradient(0deg,rgba(20,10,32,.6) 0%,transparent 50%)}
 .hero-tulip{position:absolute;bottom:0;right:0;width:clamp(180px,26vw,400px);opacity:.5;pointer-events:none;z-index:1}
 .hero-tulip img{width:100%;display:block}
-.hero-content{position:absolute;z-index:2;bottom:60px;right:5vw;color:white;max-width:420px;text-align:right;animation:hero-in 1.2s ease both}
+.hero-content{position:absolute;z-index:2;top:0;left:0;right:0;bottom:0;color:white;animation:hero-in 1.2s ease both}
+.hero-names{position:absolute;top:60px;right:5vw;text-align:right;max-width:380px}
+.hero-bottom{position:absolute;bottom:32px;left:0;right:0;padding:0 5vw;display:flex;flex-direction:column;align-items:center;gap:12px}
 @keyframes hero-in{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
 .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--lila);margin-bottom:12px;display:block;animation:hero-in 1.2s .2s ease both;text-align:right}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,6.5vw,88px);line-height:.95;font-weight:700;text-shadow:0 10px 50px rgba(0,0,0,.3);animation:hero-in 1.2s .3s ease both}
 .hero h1 em{font-style:italic;color:var(--lila)}
-.hero-verse{font-family:'Playfair Display',serif;font-size:clamp(13px,1.4vw,18px);line-height:1.5;font-style:italic;max-width:400px;margin:14px 0 10px;opacity:.88;animation:hero-in 1.2s .5s ease both;margin-left:auto}
+.hero-verse{font-family:'Playfair Display',serif;font-size:clamp(13px,1.4vw,17px);line-height:1.5;font-style:italic;max-width:600px;margin:0 0 10px;opacity:.88;animation:hero-in 1.2s .5s ease both;text-align:center}
 .hero-verse cite{font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;display:block;margin-top:10px;color:var(--lila);font-style:normal}
-.hero-date{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;margin:18px 0 22px;animation:hero-in 1.2s .6s ease both}
+.hero-date{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:0;animation:hero-in 1.2s .6s ease both}
 .hero-date span,.hero-date strong{padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(12px);font-size:14px}
 .hero-date strong{font-weight:700;background:rgba(201,167,232,.25)}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;animation:hero-in 1.2s .7s ease both}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;animation:hero-in 1.2s .7s ease both}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:999px;font:600 14px/1 'Jost',sans-serif;letter-spacing:.06em;text-decoration:none;border:none;cursor:pointer;transition:transform .25s,box-shadow .25s}
@@ -276,25 +278,31 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
   <div class="aurora" id="aurora"></div>
   <div class="hero-tulip"><img src="assets/tulip_single.png" alt="tulipán"/></div>
   <div class="hero-content">
-    <span class="hero-eyebrow" data-es="Celebrando nuestro amor · 21 de agosto, 2026" data-en="Celebrating our love · August 21, 2026">Celebrando nuestro amor · 21 de agosto, 2026</span>
-    <h1>
-      <span class="typewriter" id="tw-nahil"></span><br>
-      <em class="tw-amp" id="tw-amp">&</em><br>
-      <span class="typewriter" id="tw-yoel"></span>
-    </h1>
-    <p class="hero-verse">
-      "Las aguas embravecidas no pueden extinguir el amor,<br>ni pueden los ríos llevárselo con la corriente."
-      <cite>Cantares 8:7</cite>
-    </p>
-    <div class="hero-date">
-      <span data-es="Viernes" data-en="Friday">Viernes</span>
-      <strong>21 · VIII · 2026</strong>
-      <span>1:00 p.m.</span>
-      <span data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</span>
+    <!-- Nombres arriba a la derecha -->
+    <div class="hero-names">
+      <span class="hero-eyebrow" data-es="Celebrando nuestro amor · 21 de agosto, 2026" data-en="Celebrating our love · August 21, 2026">Celebrando nuestro amor · 21 de agosto, 2026</span>
+      <h1>
+        <span class="typewriter" id="tw-nahil"></span><br>
+        <em class="tw-amp" id="tw-amp">&</em><br>
+        <span class="typewriter" id="tw-yoel"></span>
+      </h1>
     </div>
-    <div class="hero-actions">
-      <a href="#rsvp" class="btn btn-primary" data-es="Confirmar asistencia" data-en="RSVP Now">Confirmar asistencia</a>
-      <a href="#fotos" class="btn btn-outline" data-es="Compartir fotos" data-en="Share Photos">Compartir fotos</a>
+    <!-- Versículo + fecha + botones abajo al centro -->
+    <div class="hero-bottom">
+      <p class="hero-verse">
+        "Las aguas embravecidas no pueden extinguir el amor,<br>ni pueden los ríos llevárselo con la corriente."
+        <cite>Cantares 8:7</cite>
+      </p>
+      <div class="hero-date">
+        <span data-es="Viernes" data-en="Friday">Viernes</span>
+        <strong>21 · VIII · 2026</strong>
+        <span>1:00 p.m.</span>
+        <span data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#rsvp" class="btn btn-primary" data-es="Confirmar asistencia" data-en="RSVP Now">Confirmar asistencia</a>
+        <a href="#fotos" class="btn btn-outline" data-es="Compartir fotos" data-en="Share Photos">Compartir fotos</a>
+      </div>
     </div>
   </div>
 </section>
