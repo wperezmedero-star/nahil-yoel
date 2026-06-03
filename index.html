@@ -20,11 +20,14 @@ html{scroll-behavior:smooth}
 body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);overflow-x:hidden}
 
 /* PÉTALOS */
-.petal{position:fixed;top:-60px;pointer-events:none;z-index:9999;opacity:0;animation:petal-fall linear infinite;will-change:transform,opacity}
-@keyframes petal-fall{
-  0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:0}
-  5%{opacity:.85}90%{opacity:.65}
-  100%{transform:translateY(110vh) rotate(720deg) translateX(50px);opacity:0}
+.petal{position:fixed;top:-80px;pointer-events:none;z-index:9999;opacity:0;will-change:transform,opacity;animation:petal-drift ease-in-out infinite;filter:drop-shadow(1px 3px 4px rgba(150,80,200,.15))}
+@keyframes petal-drift{
+  0%{opacity:0;transform:translateY(0) translateX(0) rotate(0deg) rotateY(0deg)}
+  8%{opacity:.72}
+  30%{transform:translateY(28vh) translateX(22px) rotate(95deg) rotateY(15deg)}
+  60%{transform:translateY(60vh) translateX(-18px) rotate(200deg) rotateY(-10deg)}
+  88%{opacity:.55}
+  100%{opacity:0;transform:translateY(108vh) translateX(14px) rotate(330deg) rotateY(20deg)}
 }
 
 /* PARTÍCULAS */
@@ -552,18 +555,27 @@ function submitRSVP(e){
   burstHearts();
 }
 
-// PÉTALOS
+// PÉTALOS REALISTAS
 (function(){
-  const LILA=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><ellipse cx='20' cy='28' rx='14' ry='22' fill='rgba(201,167,232,.82)' transform='rotate(-10 20 28)'/><ellipse cx='20' cy='28' rx='9' ry='16' fill='rgba(230,210,255,.5)' transform='rotate(-10 20 28)'/></svg>`;
-  const SKY=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><ellipse cx='20' cy='28' rx='14' ry='22' fill='rgba(184,223,245,.78)' transform='rotate(8 20 28)'/><ellipse cx='20' cy='28' rx='9' ry='16' fill='rgba(220,240,255,.5)' transform='rotate(8 20 28)'/></svg>`;
-  const PALE=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><ellipse cx='20' cy='28' rx='14' ry='22' fill='rgba(237,224,249,.88)' transform='rotate(5 20 28)'/></svg>`;
-  const types=[LILA,SKY,PALE,LILA,LILA];
-  for(let i=0;i<24;i++){
-    const el=document.createElement('div');
+  function petal(c1,c2,cv,id){
+    return "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 58'><defs><radialGradient id='g"+id+"' cx='38%' cy='28%' r='68%'><stop offset='0%' stop-color='"+c2+"'/><stop offset='100%' stop-color='"+c1+"'/></radialGradient></defs><path d='M22 55 C7 44 1 27 6 13 C10 3 18 0 22 1 C26 0 34 3 38 13 C43 27 37 44 22 55Z' fill='url(#g"+id+")'/>  <path d='M22 55 C21 38 20 20 22 1' stroke='"+cv+"' stroke-width='0.9' fill='none' opacity='0.35'/><path d='M22 40 C15 33 9 22 11 14' stroke='"+cv+"' stroke-width='0.55' fill='none' opacity='0.22'/><path d='M22 40 C29 33 35 22 33 14' stroke='"+cv+"' stroke-width='0.55' fill='none' opacity='0.22'/></svg>";
+  }
+  var types=[
+    petal('rgba(185,135,228,.86)','rgba(222,195,248,.92)','#9055b5',1),
+    petal('rgba(165,115,215,.82)','rgba(210,182,244,.9)' ,'#8045a5',2),
+    petal('rgba(162,208,242,.82)','rgba(208,233,253,.9)' ,'#5588c0',3),
+    petal('rgba(200,160,238,.84)','rgba(232,212,252,.92)','#a065c0',4),
+    petal('rgba(220,190,245,.8)' ,'rgba(243,228,255,.94)','#b075d0',5),
+  ];
+  var COUNT=9;
+  for(var i=0;i<COUNT;i++){
+    var el=document.createElement('div');
     el.className='petal';
-    const size=16+Math.random()*26;
-    el.style.cssText=`width:${size}px;height:${size*1.3}px;left:${Math.random()*105}vw;animation-duration:${7+Math.random()*10}s;animation-delay:${Math.random()*14}s;`;
-    el.innerHTML=types[Math.floor(Math.random()*types.length)];
+    var size=24+Math.random()*18;
+    var dur=15+Math.random()*13;
+    var delay=i*4+Math.random()*3;
+    el.style.cssText='width:'+size+'px;height:'+(size*1.35)+'px;left:'+(5+Math.random()*90)+'vw;animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
+    el.innerHTML=types[i%types.length];
     document.body.appendChild(el);
   }
 })();
