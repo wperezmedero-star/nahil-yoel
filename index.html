@@ -68,17 +68,17 @@ body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);over
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(28,12,42,.78) 0%,rgba(60,30,90,.45) 40%,rgba(100,160,220,.12) 100%),linear-gradient(0deg,rgba(20,10,32,.6) 0%,transparent 50%)}
 .hero-tulip{position:absolute;bottom:0;right:0;width:clamp(180px,26vw,400px);opacity:.5;pointer-events:none;z-index:1}
 .hero-tulip img{width:100%;display:block}
-.hero-content{position:relative;z-index:2;padding:140px 8vw 80px;color:white;max-width:1000px;justify-self:start;animation:hero-in 1.2s ease both}
+.hero-content{position:absolute;z-index:2;bottom:60px;right:5vw;color:white;max-width:420px;text-align:right;animation:hero-in 1.2s ease both}
 @keyframes hero-in{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
-.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--lila);margin-bottom:18px;display:block;animation:hero-in 1.2s .2s ease both}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--lila);margin-bottom:12px;display:block;animation:hero-in 1.2s .2s ease both;text-align:right}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,6.5vw,88px);line-height:.95;font-weight:700;text-shadow:0 10px 50px rgba(0,0,0,.3);animation:hero-in 1.2s .3s ease both}
 .hero h1 em{font-style:italic;color:var(--lila)}
-.hero-verse{font-family:'Playfair Display',serif;font-size:clamp(17px,2.1vw,27px);line-height:1.4;font-style:italic;max-width:680px;margin:28px 0 18px;opacity:.92;animation:hero-in 1.2s .5s ease both}
+.hero-verse{font-family:'Playfair Display',serif;font-size:clamp(13px,1.4vw,18px);line-height:1.5;font-style:italic;max-width:400px;margin:14px 0 10px;opacity:.88;animation:hero-in 1.2s .5s ease both;margin-left:auto}
 .hero-verse cite{font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;display:block;margin-top:10px;color:var(--lila);font-style:normal}
-.hero-date{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:30px 0 36px;animation:hero-in 1.2s .6s ease both}
+.hero-date{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;margin:18px 0 22px;animation:hero-in 1.2s .6s ease both}
 .hero-date span,.hero-date strong{padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(12px);font-size:14px}
 .hero-date strong{font-weight:700;background:rgba(201,167,232,.25)}
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;animation:hero-in 1.2s .7s ease both}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;animation:hero-in 1.2s .7s ease both}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:999px;font:600 14px/1 'Jost',sans-serif;letter-spacing:.06em;text-decoration:none;border:none;cursor:pointer;transition:transform .25s,box-shadow .25s}
@@ -229,6 +229,9 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
   section{padding:70px 5vw}
   .hero-tulip{width:160px;opacity:.35}
   .vb-tulip{display:none}
+  .hero-content{right:3vw;bottom:40px;max-width:85vw}
+  .hero-date{justify-content:flex-end}
+  .hero-actions{justify-content:flex-end}
 }
 @media(max-width:520px){
   .photo-grid{grid-template-columns:1fr}
