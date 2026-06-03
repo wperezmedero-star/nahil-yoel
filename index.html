@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Nahil & Yoel · 21 de agosto, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lila:#c9a7e8;--lila-deep:#a67acc;--lila-pale:#ede0f9;--lila-soft:#f7f0fe;
+  --sky:#b8dff5;--sky-deep:#7bbde0;--sky-pale:#e8f6ff;
+  --white:#fffcff;--ink:#1e1528;--muted:#7a6888;
+  --shadow-lila:0 20px 70px rgba(160,100,220,.18);
+  --shadow-soft:0 8px 40px rgba(100,60,160,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);overflow-x:hidden}
+
+/* PÉTALOS */
+.petal{position:fixed;top:-60px;pointer-events:none;z-index:9999;opacity:0;animation:petal-fall linear infinite;will-change:transform,opacity}
+@keyframes petal-fall{
+  0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:0}
+  5%{opacity:.85}90%{opacity:.65}
+  100%{transform:translateY(110vh) rotate(720deg) translateX(50px);opacity:0}
+}
+
+/* PARTÍCULAS */
+.particle{position:absolute;border-radius:50%;pointer-events:none;animation:particle-float ease-in-out infinite;will-change:transform,opacity}
+@keyframes particle-float{0%,100%{transform:translateY(0) scale(1);opacity:.6}50%{transform:translateY(-28px) scale(1.2);opacity:1}}
+
+/* AURORA */
+.aurora{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora-blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.28;animation:aurora-drift ease-in-out infinite alternate;will-change:transform}
+@keyframes aurora-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(40px,30px) scale(1.15)}}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;backdrop-filter:blur(20px);background:rgba(255,250,255,.82);border-bottom:1px solid rgba(201,167,232,.2)}
+.nav-brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--lila-deep)}
+.nav-brand span{color:var(--sky-deep)}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--lila-deep)}
+.lang-btn{padding:6px 14px;border-radius:999px;border:1px solid var(--lila);background:transparent;color:var(--lila-deep);font:600 12px 'Jost',sans-serif;letter-spacing:.1em;cursor:pointer;transition:.2s}
+.lang-btn:hover{background:var(--lila-pale)}
+
+/* MUSIC PLAYER */
+.music-player{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:999px;background:rgba(255,250,255,.95);backdrop-filter:blur(20px);box-shadow:var(--shadow-lila);border:1px solid rgba(201,167,232,.4);animation:slide-up .8s 1.5s ease both}
+@keyframes slide-up{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.play-btn{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--lila),var(--sky));border:none;cursor:pointer;display:grid;place-items:center;transition:transform .2s;box-shadow:0 0 0 0 rgba(201,167,232,.7)}
+.play-btn:hover{transform:scale(1.1)}
+.play-btn svg{fill:white}
+.play-btn.pulsing{animation:pulse-ring 1.8s ease-out infinite}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(201,167,232,.7)}70%{box-shadow:0 0 0 14px rgba(201,167,232,0)}100%{box-shadow:0 0 0 0 rgba(201,167,232,0)}}
+.music-info strong{font-size:13px;font-weight:600;color:var(--ink);display:block}
+.music-info span{font-size:11px;color:var(--muted)}
+.bars{display:flex;gap:3px;align-items:flex-end;height:18px}
+.bars span{width:3px;background:var(--lila-deep);border-radius:2px;animation:bar-dance 1s ease-in-out infinite;opacity:0}
+.bars span:nth-child(1){height:8px;animation-delay:0s}
+.bars span:nth-child(2){height:14px;animation-delay:.15s}
+.bars span:nth-child(3){height:10px;animation-delay:.3s}
+.bars span:nth-child(4){height:16px;animation-delay:.1s}
+.bars span:nth-child(5){height:7px;animation-delay:.25s}
+@keyframes bar-dance{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+.bars.playing span{opacity:1}
+
+/* HERO */
+.hero{min-height:100svh;position:relative;display:grid;place-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('assets/hero.jpg') center/cover no-repeat}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(28,12,42,.78) 0%,rgba(60,30,90,.45) 40%,rgba(100,160,220,.12) 100%),linear-gradient(0deg,rgba(20,10,32,.6) 0%,transparent 50%)}
+.hero-tulip{position:absolute;bottom:0;right:0;width:clamp(180px,26vw,400px);opacity:.5;pointer-events:none;z-index:1}
+.hero-tulip img{width:100%;display:block}
+.hero-content{position:relative;z-index:2;padding:140px 8vw 80px;color:white;max-width:1000px;justify-self:start;animation:hero-in 1.2s ease both}
+@keyframes hero-in{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--lila);margin-bottom:18px;display:block;animation:hero-in 1.2s .2s ease both}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(68px,11vw,140px);line-height:.88;font-weight:700;text-shadow:0 10px 50px rgba(0,0,0,.3);animation:hero-in 1.2s .3s ease both}
+.hero h1 em{font-style:italic;color:var(--lila)}
+.hero-verse{font-family:'Playfair Display',serif;font-size:clamp(17px,2.1vw,27px);line-height:1.4;font-style:italic;max-width:680px;margin:28px 0 18px;opacity:.92;animation:hero-in 1.2s .5s ease both}
+.hero-verse cite{font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;display:block;margin-top:10px;color:var(--lila);font-style:normal}
+.hero-date{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:30px 0 36px;animation:hero-in 1.2s .6s ease both}
+.hero-date span,.hero-date strong{padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(12px);font-size:14px}
+.hero-date strong{font-weight:700;background:rgba(201,167,232,.25)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;animation:hero-in 1.2s .7s ease both}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:999px;font:600 14px/1 'Jost',sans-serif;letter-spacing:.06em;text-decoration:none;border:none;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-3px)}
+.btn-primary{background:linear-gradient(135deg,var(--lila),var(--sky));color:var(--ink);box-shadow:0 14px 40px rgba(160,100,220,.35);position:relative;overflow:hidden}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.45) 50%,transparent 60%);animation:shimmer 2.5s ease-in-out infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}60%,100%{transform:translateX(200%)}}
+.btn-outline{background:rgba(255,255,255,.14);color:white;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(10px)}
+.btn-lila{background:var(--lila-pale);color:var(--lila-deep);border:1px solid rgba(166,122,204,.3)}
+.btn-lila:hover{box-shadow:0 14px 40px rgba(160,100,220,.25)}
+
+/* SECTIONS */
+section{padding:100px 8vw}
+.section-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--lila-deep);margin-bottom:14px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(38px,5.5vw,68px);line-height:.95;color:var(--ink)}
+.section-title em{font-style:italic;color:var(--lila-deep)}
+
+/* TULIP ROW */
+.tulip-row{display:flex;justify-content:center;background:var(--lila-soft);overflow:hidden}
+.tulip-row img{width:50%;max-height:240px;object-fit:cover;object-position:center}
+
+/* COUNTDOWN */
+.countdown-section{text-align:center;background:linear-gradient(160deg,var(--lila-soft) 0%,var(--sky-pale) 100%);padding-top:60px}
+.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:800px;margin:50px auto 0}
+.countdown-item{padding:30px 16px;border-radius:28px;background:white;box-shadow:var(--shadow-soft);border:1px solid rgba(201,167,232,.3);position:relative;overflow:hidden}
+.countdown-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--lila),var(--sky))}
+.countdown-item::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);animation:shimmer 3s ease-in-out infinite;pointer-events:none}
+.countdown-num{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:var(--lila-deep);line-height:1;display:block}
+.countdown-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px;display:block}
+
+/* VERSE BANNER */
+.verse-banner{padding:80px 8vw;text-align:center;background:linear-gradient(135deg,#3d1f5c,#1a3060);position:relative;overflow:hidden}
+.vb-bg{position:absolute;inset:0;background:url('assets/engagement_hands.jpg') center/cover;opacity:.12}
+.vb-tulip{position:absolute;top:50%;transform:translateY(-50%);width:clamp(70px,9vw,140px);opacity:.32;pointer-events:none}
+.vb-tulip-l{left:20px}
+.vb-tulip-r{right:20px;transform:translateY(-50%) scaleX(-1)}
+.verse-banner blockquote{position:relative;z-index:1;font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,40px);line-height:1.35;font-style:italic;color:white;max-width:900px;margin:0 auto}
+.verse-banner cite{font-family:'Jost',sans-serif;font-size:13px;font-style:normal;letter-spacing:.22em;text-transform:uppercase;color:var(--lila);display:block;margin-top:20px}
+
+/* STORY */
+.story-section{background:white}
+.story-section .section-title{margin-bottom:60px}
+.timeline{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.story-card{border-radius:32px;overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid rgba(201,167,232,.2);transition:transform .3s,box-shadow .3s}
+.story-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lila)}
+.story-card .img-wrap{overflow:hidden;height:340px}
+.story-card .img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.story-card:hover .img-wrap img{transform:scale(1.07)}
+.story-card-body{padding:28px 30px;background:white}
+.story-num{font-size:11px;font-weight:800;letter-spacing:.25em;color:var(--lila-deep)}
+.story-card h3{font-family:'Playfair Display',serif;font-size:28px;margin:6px 0 10px}
+.story-card p{color:var(--muted);line-height:1.7;font-size:15px}
+
+/* TULIP STRIP */
+.tulip-strip{position:relative;overflow:hidden;height:clamp(140px,18vw,260px);background:var(--lila-soft)}
+.tulip-strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.tulip-strip-overlay{position:absolute;inset:0;background:rgba(255,250,255,.25)}
+
+/* DETAILS */
+.details-section{background:linear-gradient(160deg,var(--lila-soft),var(--sky-pale))}
+.details-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:24px;margin-top:50px}
+.details-card{background:white;border-radius:36px;padding:50px;box-shadow:var(--shadow-soft);border:1px solid rgba(201,167,232,.25)}
+.detail-items{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
+.detail-item{padding:20px;border-radius:18px;background:var(--lila-soft);border:1px solid rgba(166,122,204,.15)}
+.detail-item label{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lila-deep);margin-bottom:6px}
+.detail-item strong{font-size:15px;font-weight:600}
+.ring-photo{border-radius:36px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.ring-photo img{width:100%;height:100%;object-fit:cover;display:block;min-height:380px}
+
+/* GALLERY */
+.gallery-section{background:white}
+.photo-grid{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.photo-grid .img-wrap{border-radius:24px;overflow:hidden;box-shadow:var(--shadow-soft);cursor:pointer}
+.photo-grid .img-wrap img{width:100%;object-fit:cover;display:block;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.photo-grid .img-wrap:hover img{transform:scale(1.06)}
+.photo-grid .img-wrap:nth-child(1) img,.photo-grid .img-wrap:nth-child(2) img,.photo-grid .img-wrap:nth-child(3) img{height:400px}
+.photo-grid .img-wrap:nth-child(4) img,.photo-grid .img-wrap:nth-child(5) img,.photo-grid .img-wrap:nth-child(6) img{height:300px}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;z-index:300;background:rgba(10,5,20,.92);backdrop-filter:blur(10px);place-items:center}
+.lightbox.open{display:grid}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:16px}
+.lightbox-close{position:absolute;top:24px;right:28px;color:white;font-size:36px;cursor:pointer;background:none;border:none}
+
+/* UPLOAD */
+.upload-section{background:linear-gradient(160deg,var(--lila-soft),var(--sky-pale));text-align:center}
+.upload-inner{max-width:700px;margin:0 auto}
+.upload-zone{margin:40px auto;border:2px dashed rgba(166,122,204,.5);border-radius:32px;padding:50px 30px;background:white;cursor:pointer;transition:border-color .2s,background .2s}
+.upload-zone:hover{border-color:var(--lila-deep);background:var(--lila-soft)}
+.upload-zone p{color:var(--muted);font-size:15px;margin:16px 0 20px}
+.upload-zone input{display:none}
+.preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.preview-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;box-shadow:var(--shadow-soft)}
+.upload-note{font-size:13px;color:var(--muted);margin-top:16px;line-height:1.6}
+
+/* RSVP */
+.rsvp-section{background:white}
+.rsvp-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:50px}
+.rsvp-info p{color:var(--muted);line-height:1.8;font-size:16px;margin-top:20px}
+.rsvp-form{display:grid;gap:14px}
+.rsvp-form input,.rsvp-form select,.rsvp-form textarea{width:100%;padding:15px 18px;border-radius:16px;border:1px solid rgba(166,122,204,.3);font:400 15px 'Jost',sans-serif;color:var(--ink);background:var(--lila-soft);outline:none;transition:border-color .2s}
+.rsvp-form input:focus,.rsvp-form select:focus,.rsvp-form textarea:focus{border-color:var(--lila-deep)}
+.rsvp-form textarea{min-height:110px;resize:vertical}
+.rsvp-form .btn-primary{width:100%;font-size:15px;min-height:52px;border:none}
+.rsvp-success{display:none;text-align:center;padding:30px;background:var(--lila-soft);border-radius:20px;border:1px solid rgba(166,122,204,.3)}
+.rsvp-success .icon{font-size:40px;display:block;margin-bottom:12px}
+.rsvp-success h3{font-family:'Playfair Display',serif;font-size:26px}
+.rsvp-success p{color:var(--muted);margin-top:8px}
+
+/* HEART BURST */
+.heart-burst{position:fixed;inset:0;pointer-events:none;z-index:9998}
+.heart-burst span{position:absolute;animation:heart-fly 1.4s ease-out forwards}
+@keyframes heart-fly{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-120px) scale(.5)}}
+
+/* FOOTER */
+footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align:center;padding:70px 8vw;position:relative;overflow:hidden}
+.footer-bg{position:absolute;inset:0;background:url('assets/formal_kingdom.jpg') center/cover;opacity:.07}
+.footer-tulip{position:absolute;bottom:0;left:0;right:0;width:100%;max-height:160px;object-fit:cover;object-position:top;opacity:.18;pointer-events:none}
+.footer-inner{position:relative;z-index:1}
+.footer-names{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,90px);line-height:.9;margin-bottom:20px}
+.footer-names span{color:var(--lila)}
+.footer-date{font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:32px}
+.footer-verse{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;opacity:.8;max-width:600px;margin:0 auto}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.stagger.visible>*:nth-child(1){opacity:1;transform:none;transition-delay:.05s}
+.stagger.visible>*:nth-child(2){opacity:1;transform:none;transition-delay:.15s}
+.stagger.visible>*:nth-child(3){opacity:1;transform:none;transition-delay:.25s}
+.stagger.visible>*:nth-child(4){opacity:1;transform:none;transition-delay:.35s}
+.stagger.visible>*:nth-child(5){opacity:1;transform:none;transition-delay:.45s}
+.stagger.visible>*:nth-child(6){opacity:1;transform:none;transition-delay:.55s}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .nav-links{display:none}
+  .timeline{grid-template-columns:1fr}
+  .details-grid{grid-template-columns:1fr}
+  .rsvp-grid{grid-template-columns:1fr}
+  .photo-grid{grid-template-columns:repeat(2,1fr)}
+  .photo-grid .img-wrap:nth-child(n) img{height:220px}
+  .countdown-grid{grid-template-columns:repeat(2,1fr)}
+  section{padding:70px 5vw}
+  .hero-tulip{width:160px;opacity:.35}
+  .vb-tulip{display:none}
+}
+@media(max-width:520px){
+  .photo-grid{grid-template-columns:1fr}
+  .preview-grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-brand">Nahil <span>&</span> Yoel</div>
+  <nav class="nav-links">
+    <a href="#historia" data-es="Historia" data-en="Story">Historia</a>
+    <a href="#detalles" data-es="Detalles" data-en="Details">Detalles</a>
+    <a href="#galeria" data-es="Galería" data-en="Gallery">Galería</a>
+    <a href="#fotos" data-es="Fotos" data-en="Photos">Fotos</a>
+    <a href="#rsvp" data-es="Asistencia" data-en="RSVP">Asistencia</a>
+  </nav>
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+</header>
+
+<!-- MUSIC PLAYER -->
+<div class="music-player">
+  <audio id="audio" src="assets/sabes.mp3" loop></audio>
+  <button class="play-btn" id="playBtn" onclick="toggleMusic()">
+    <svg id="playIcon" viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+  </button>
+  <div class="music-info"><strong>Sabes</strong><span>Reik</span></div>
+  <div class="bars" id="bars">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="aurora" id="aurora"></div>
+  <div class="hero-tulip"><img src="assets/tulip_single.png" alt="tulipán"/></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow" data-es="Celebrando nuestro amor · 21 de agosto, 2026" data-en="Celebrating our love · August 21, 2026">Celebrando nuestro amor · 21 de agosto, 2026</span>
+    <h1>Nahil<br><em>&</em><br>Yoel</h1>
+    <p class="hero-verse">
+      "Las aguas embravecidas no pueden extinguir el amor,<br>ni pueden los ríos llevárselo con la corriente."
+      <cite>Cantares 8:7</cite>
+    </p>
+    <div class="hero-date">
+      <span data-es="Viernes" data-en="Friday">Viernes</span>
+      <strong>21 · VIII · 2026</strong>
+      <span>1:00 p.m.</span>
+      <span data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#rsvp" class="btn btn-primary" data-es="Confirmar asistencia" data-en="RSVP Now">Confirmar asistencia</a>
+      <a href="#fotos" class="btn btn-outline" data-es="Compartir fotos" data-en="Share Photos">Compartir fotos</a>
+    </div>
+  </div>
+</section>
+
+<!-- TULIP ROW -->
+<div class="tulip-row">
+  <img src="assets/tulip_bouquet.png" alt="ramo tulipanes"/>
+  <img src="assets/tulip_collage_lila.png" alt="tulipanes lilas"/>
+</div>
+
+<!-- COUNTDOWN -->
+<section class="countdown-section reveal">
+  <span class="section-tag" data-es="Cuenta regresiva" data-en="Counting down">Cuenta regresiva</span>
+  <h2 class="section-title">Falta poco para el <em>gran día</em></h2>
+  <div class="countdown-grid stagger">
+    <div class="countdown-item"><span class="countdown-num" id="days">000</span><span class="countdown-label" data-es="Días" data-en="Days">Días</span></div>
+    <div class="countdown-item"><span class="countdown-num" id="hours">00</span><span class="countdown-label" data-es="Horas" data-en="Hours">Horas</span></div>
+    <div class="countdown-item"><span class="countdown-num" id="minutes">00</span><span class="countdown-label" data-es="Minutos" data-en="Minutes">Minutos</span></div>
+    <div class="countdown-item"><span class="countdown-num" id="seconds">00</span><span class="countdown-label" data-es="Segundos" data-en="Seconds">Segundos</span></div>
+  </div>
+</section>
+
+<!-- VERSE BANNER -->
+<div class="verse-banner reveal">
+  <div class="vb-bg"></div>
+  <img class="vb-tulip vb-tulip-l" src="assets/tulip_single.png" alt="tulipán"/>
+  <img class="vb-tulip vb-tulip-r" src="assets/tulip_single.png" alt="tulipán"/>
+  <blockquote>
+    <span data-es='"Las aguas embravecidas no pueden extinguir el amor, ni pueden los ríos llevárselo con la corriente. Si un hombre ofreciera todas las riquezas de su casa a cambio de amor, estas serían del todo despreciadas."' data-en='"Many waters cannot quench love, neither can floods drown it. If a man gave all the wealth of his house for love, it would be utterly scorned."'>"Las aguas embravecidas no pueden extinguir el amor, ni pueden los ríos llevárselo con la corriente. Si un hombre ofreciera todas las riquezas de su casa a cambio de amor, estas serían del todo despreciadas."</span>
+    <cite>Cantares 8:7 · Song of Solomon 8:7</cite>
+  </blockquote>
+</div>
+
+<!-- HISTORIA -->
+<section id="historia" class="story-section reveal">
+  <span class="section-tag" data-es="Nuestra historia" data-en="Our story">Nuestra historia</span>
+  <h2 class="section-title">Momentos que nos <em>trajeron aquí</em></h2>
+  <div class="timeline stagger">
+    <div class="story-card">
+      <div class="img-wrap"><img src="assets/sofa.jpg" alt="Juntos"/></div>
+      <div class="story-card-body">
+        <p class="story-num">01 · COMPAÑÍA</p>
+        <h3 data-es="Compañía" data-en="Together">Compañía</h3>
+        <p data-es="Pequeños momentos que fueron creando confianza, cariño y una historia propia." data-en="Small moments that built trust, affection and a story of their own.">Pequeños momentos que fueron creando confianza, cariño y una historia propia.</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="img-wrap"><img src="assets/love.jpg" alt="Love"/></div>
+      <div class="story-card-body">
+        <p class="story-num">02 · AMOR</p>
+        <h3 data-es="Amor que crece" data-en="Growing love">Amor que crece</h3>
+        <p data-es="Risas, paseos y recuerdos que reflejan una relación auténtica y familiar." data-en="Laughter, walks and memories reflecting an authentic relationship.">Risas, paseos y recuerdos que reflejan una relación auténtica y familiar.</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="img-wrap"><img src="assets/airport.jpg" alt="Abrazo"/></div>
+      <div class="story-card-body">
+        <p class="story-num">03 · ABRAZO</p>
+        <h3 data-es="Abrazos que hablan" data-en="Embraces that speak">Abrazos que hablan</h3>
+        <p data-es="Algunas fotos guardan emoción, ternura y promesa sin necesitar palabras." data-en="Some photos hold emotion, tenderness and promise without needing words.">Algunas fotos guardan emoción, ternura y promesa sin necesitar palabras.</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="img-wrap"><img src="assets/walk.jpg" alt="Caminando"/></div>
+      <div class="story-card-body">
+        <p class="story-num">04 · CAMINO</p>
+        <h3 data-es="Un camino juntos" data-en="One path together">Un camino juntos</h3>
+        <p data-es="De la mano, mirando hacia adelante, construyendo un futuro con amor y fe." data-en="Hand in hand, looking forward, building a future with love and faith.">De la mano, mirando hacia adelante, construyendo un futuro con amor y fe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TULIP STRIP -->
+<div class="tulip-strip">
+  <img src="assets/tulip_bouquet.png" alt="tulipanes"/>
+  <div class="tulip-strip-overlay"></div>
+</div>
+
+<!-- DETAILS -->
+<section id="detalles" class="details-section reveal">
+  <span class="section-tag" data-es="La celebración" data-en="The celebration">La celebración</span>
+  <h2 class="section-title">Detalles de la <em>boda</em></h2>
+  <div class="details-grid">
+    <div class="details-card">
+      <div class="detail-items stagger">
+        <div class="detail-item"><label data-es="Fecha" data-en="Date">Fecha</label><strong data-es="Viernes, 21 de agosto de 2026" data-en="Friday, August 21, 2026">Viernes, 21 de agosto de 2026</strong></div>
+        <div class="detail-item"><label data-es="Hora" data-en="Time">Hora</label><strong>1:00 p.m.</strong></div>
+        <div class="detail-item"><label data-es="Lugar" data-en="Venue">Lugar</label><strong data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</strong></div>
+        <div class="detail-item"><label data-es="Dirección" data-en="Address">Dirección</label><strong>12600 SW 216th St,<br>Goulds, FL 33170</strong></div>
+      </div>
+      <a class="btn btn-lila" target="_blank" href="https://www.google.com/maps/search/?api=1&query=12600+SW+216th+St+Goulds+FL+33170">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span data-es="Ver en Google Maps" data-en="Open in Google Maps">Ver en Google Maps</span>
+      </a>
+    </div>
+    <div class="ring-photo"><img src="assets/ring.jpg" alt="Anillo"/></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galeria" class="gallery-section reveal">
+  <span class="section-tag" data-es="Galería" data-en="Gallery">Galería</span>
+  <h2 class="section-title">Recuerdos de <em>nuestra historia</em></h2>
+  <div class="photo-grid stagger">
+    <div class="img-wrap" onclick="openLightbox('assets/formal_kingdom.jpg')"><img src="assets/formal_kingdom.jpg" alt="Salón del Reino"/></div>
+    <div class="img-wrap" onclick="openLightbox('assets/blue_dress.jpg')"><img src="assets/blue_dress.jpg" alt="Nahil y Yoel"/></div>
+    <div class="img-wrap" onclick="openLightbox('assets/hug.jpg')"><img src="assets/hug.jpg" alt="Abrazo"/></div>
+    <div class="img-wrap" onclick="openLightbox('assets/restaurant.jpg')"><img src="assets/restaurant.jpg" alt="Cena"/></div>
+    <div class="img-wrap" onclick="openLightbox('assets/engagement_hands.jpg')"><img src="assets/engagement_hands.jpg" alt="Anillos"/></div>
+    <div class="img-wrap" onclick="openLightbox('assets/love.jpg')"><img src="assets/love.jpg" alt="Amor"/></div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">×</button>
+  <img id="lightboxImg" src="" alt=""/>
+</div>
+
+<!-- UPLOAD -->
+<section id="fotos" class="upload-section reveal">
+  <div class="upload-inner">
+    <img src="assets/tulip_single.png" style="width:65px;margin-bottom:10px;opacity:.65;display:inline-block" alt="tulipán"/>
+    <br>
+    <span class="section-tag" data-es="Álbum del día" data-en="Day album">Álbum del día</span>
+    <h2 class="section-title">Comparte tus <em>fotos</em></h2>
+    <p style="color:var(--muted);line-height:1.8;margin-top:18px" data-es="El 21 de agosto, sube aquí las fotos que tomes durante la celebración. Entre todos crearemos el álbum de recuerdos más especial." data-en="On August 21st, upload the photos you take during the celebration. Together we'll create the most special memory album.">El 21 de agosto, sube aquí las fotos que tomes durante la celebración. Entre todos crearemos el álbum de recuerdos más especial.</p>
+    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+      <svg viewBox="0 0 48 48" width="48" height="48" fill="none"><circle cx="24" cy="24" r="24" fill="#ede0f9"/><path d="M24 14v14M17 21l7-7 7 7" stroke="#a67acc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 34h20" stroke="#a67acc" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <p data-es="Toca para seleccionar fotos · JPG, PNG" data-en="Tap to select photos · JPG, PNG">Toca para seleccionar fotos · JPG, PNG</p>
+      <span class="btn btn-lila" data-es="Seleccionar fotos" data-en="Select photos">Seleccionar fotos</span>
+      <input type="file" id="fileInput" accept="image/*" multiple onchange="handleUpload(event)"/>
+    </div>
+    <div class="preview-grid" id="previewGrid"></div>
+    <p class="upload-note" data-es="💡 Envía las fotos por WhatsApp a los novios para crear el álbum compartido." data-en="💡 Send photos via WhatsApp to the couple to create the shared album.">💡 Envía las fotos por WhatsApp a los novios para crear el álbum compartido.</p>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section id="rsvp" class="rsvp-section reveal">
+  <span class="section-tag" data-es="Confirmación" data-en="Confirmation">Confirmación</span>
+  <h2 class="section-title">¿Vas a <em>estar?</em></h2>
+  <div class="rsvp-grid">
+    <div class="rsvp-info">
+      <p data-es="Tu presencia es el mejor regalo. Confirma tu asistencia antes del 7 de agosto para que podamos prepararnos para recibirte con todo el amor." data-en="Your presence is the best gift. Please confirm before August 7th so we can prepare to welcome you with all our love.">Tu presencia es el mejor regalo. Confirma tu asistencia antes del 7 de agosto para que podamos prepararnos para recibirte con todo el amor.</p>
+      <img src="assets/hug.jpg" alt="Nahil y Yoel" style="width:100%;border-radius:28px;margin-top:24px;object-fit:cover;height:280px;box-shadow:var(--shadow-soft)"/>
+    </div>
+    <div>
+      <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+        <input type="text" placeholder="Nombre completo / Full name" required/>
+        <input type="number" min="1" max="10" placeholder="Número de personas / Number of guests" required/>
+        <select required><option value="" disabled selected>¿Asistirás? / Will you attend?</option><option value="si">Sí, ahí estaré 🎉</option><option value="no">No podré asistir</option></select>
+        <textarea placeholder="Mensaje para Nahil y Yoel / Message for the couple"></textarea>
+        <button type="submit" class="btn btn-primary">Enviar confirmación / Send confirmation</button>
+      </form>
+      <div class="rsvp-success" id="rsvpSuccess">
+        <span class="icon">💜</span>
+        <h3 data-es="¡Gracias!" data-en="Thank you!">¡Gracias!</h3>
+        <p data-es="Nahil y Yoel están felices de contar contigo en este día tan especial." data-en="Nahil and Yoel are happy to have you on this very special day.">Nahil y Yoel están felices de contar contigo en este día tan especial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bg"></div>
+  <img class="footer-tulip" src="assets/tulip_bouquet.png" alt="tulipanes"/>
+  <div class="footer-inner">
+    <div class="footer-names">Nahil <span>&</span> Yoel</div>
+    <div class="footer-date">21 de agosto, 2026 · Goulds, Florida</div>
+    <p class="footer-verse">"Las aguas embravecidas no pueden extinguir el amor"<br><em>Cantares 8:7</em></p>
+  </div>
+</footer>
+
+<script>
+// IDIOMA
+let lang='es';
+function toggleLang(){
+  lang=lang==='es'?'en':'es';
+  document.getElementById('langBtn').textContent=lang==='es'?'EN':'ES';
+  document.querySelectorAll('[data-es]').forEach(el=>{
+    const t=el.getAttribute('data-'+lang);
+    if(t)el.textContent=t;
+  });
+}
+
+// MÚSICA
+let playing=false;
+const audio=document.getElementById('audio');
+const playIcon=document.getElementById('playIcon');
+const bars=document.getElementById('bars');
+const playBtn=document.getElementById('playBtn');
+function toggleMusic(){
+  if(playing){
+    audio.pause();
+    playIcon.innerHTML='<path d="M8 5v14l11-7z"/>';
+    bars.classList.remove('playing');
+    playBtn.classList.remove('pulsing');
+  }else{
+    audio.play();
+    playIcon.innerHTML='<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    bars.classList.add('playing');
+    playBtn.classList.add('pulsing');
+  }
+  playing=!playing;
+}
+
+// COUNTDOWN
+function updateCountdown(){
+  const diff=new Date('2026-08-21T13:00:00')-new Date();
+  if(diff<=0)return;
+  document.getElementById('days').textContent=String(Math.floor(diff/86400000)).padStart(3,'0');
+  document.getElementById('hours').textContent=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('minutes').textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  document.getElementById('seconds').textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+}
+updateCountdown();setInterval(updateCountdown,1000);
+
+// LIGHTBOX
+function openLightbox(src){
+  document.getElementById('lightboxImg').src=src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// UPLOAD
+function handleUpload(e){
+  const grid=document.getElementById('previewGrid');
+  Array.from(e.target.files).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const img=document.createElement('img');
+      img.src=ev.target.result;
+      img.onclick=()=>openLightbox(ev.target.result);
+      grid.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// RSVP + CORAZONES
+function burstHearts(){
+  const c=document.createElement('div');
+  c.className='heart-burst';
+  document.body.appendChild(c);
+  const e=['💜','🌷','💫','✨','🤍'];
+  for(let i=0;i<18;i++){
+    const s=document.createElement('span');
+    s.textContent=e[Math.floor(Math.random()*e.length)];
+    s.style.cssText=`left:${20+Math.random()*60}%;bottom:${20+Math.random()*40}%;animation-delay:${Math.random()*.5}s;font-size:${20+Math.random()*20}px;`;
+    c.appendChild(s);
+  }
+  setTimeout(()=>c.remove(),2000);
+}
+function submitRSVP(e){
+  e.preventDefault();
+  document.getElementById('rsvpForm').style.display='none';
+  document.getElementById('rsvpSuccess').style.display='block';
+  burstHearts();
+}
+
+// PÉTALOS
+(function(){
+  const LILA=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><ellipse cx='20' cy='28' rx='14' ry='22' fill='rgba(201,167,232,.82)' transform='rotate(-10 20 28)'/><ellipse cx='20' cy='28' rx='9' ry='16' fill='rgba(230,210,255,.5)' transform='rotate(-10 20 28)'/></svg>`;
+  const SKY=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><ellipse cx='20' cy='28' rx='14' ry='22' fill='rgba(184,223,245,.78)' transform='rotate(8 20 28)'/><ellipse cx='20' cy='28' rx='9' ry='16' fill='rgba(220,240,255,.5)' transform='rotate(8 20 28)'/></svg>`;
+  const PALE=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><ellipse cx='20' cy='28' rx='14' ry='22' fill='rgba(237,224,249,.88)' transform='rotate(5 20 28)'/></svg>`;
+  const types=[LILA,SKY,PALE,LILA,LILA];
+  for(let i=0;i<24;i++){
+    const el=document.createElement('div');
+    el.className='petal';
+    const size=16+Math.random()*26;
+    el.style.cssText=`width:${size}px;height:${size*1.3}px;left:${Math.random()*105}vw;animation-duration:${7+Math.random()*10}s;animation-delay:${Math.random()*14}s;`;
+    el.innerHTML=types[Math.floor(Math.random()*types.length)];
+    document.body.appendChild(el);
+  }
+})();
+
+// PARTÍCULAS HERO
+(function(){
+  const hero=document.querySelector('.hero');
+  const COLORS=['rgba(248,215,164,.9)','rgba(201,167,232,.8)','rgba(184,223,245,.8)','rgba(255,255,255,.7)'];
+  for(let i=0;i<26;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=3+Math.random()*6;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${COLORS[i%COLORS.length]};animation-duration:${3+Math.random()*5}s;animation-delay:${Math.random()*4}s;box-shadow:0 0 ${size*2}px ${COLORS[i%COLORS.length]};`;
+    hero.appendChild(p);
+  }
+})();
+
+// AURORA
+(function(){
+  const a=document.getElementById('aurora');
+  if(!a)return;
+  [{color:'rgba(180,120,255,.35)',size:500,x:'10%',y:'15%',dur:8},
+   {color:'rgba(100,180,255,.28)',size:400,x:'65%',y:'60%',dur:11},
+   {color:'rgba(230,170,255,.22)',size:350,x:'40%',y:'80%',dur:9}
+  ].forEach(b=>{
+    const el=document.createElement('div');
+    el.className='aurora-blob';
+    el.style.cssText=`width:${b.size}px;height:${b.size}px;background:${b.color};left:${b.x};top:${b.y};animation-duration:${b.dur}s;`;
+    a.appendChild(el);
+  });
+})();
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+}),{threshold:0.1});
+document.querySelectorAll('.reveal,.stagger').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
