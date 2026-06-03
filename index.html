@@ -20,7 +20,7 @@ html{scroll-behavior:smooth}
 body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);overflow-x:hidden}
 
 /* PÉTALOS */
-.petal{position:fixed;pointer-events:none;z-index:9999;opacity:0;will-change:transform,opacity;filter:drop-shadow(0px 2px 5px rgba(140,70,180,.2))}
+.petal{position:absolute;pointer-events:none;z-index:3;opacity:0;will-change:transform,opacity;filter:drop-shadow(0px 2px 5px rgba(140,70,180,.2))}
 @keyframes petal-float-1{0%{opacity:0;transform:translate(0,0) rotate(var(--r0))}6%{opacity:var(--op)}50%{transform:translate(var(--mx),45vh) rotate(var(--r1))}92%{opacity:calc(var(--op)*.6)}100%{opacity:0;transform:translate(var(--ex),100vh) rotate(var(--r2))}}
 @keyframes petal-float-2{0%{opacity:0;transform:translate(0,0) rotate(var(--r0)) scale(.8)}7%{opacity:var(--op)}45%{transform:translate(var(--mx),-20px) rotate(var(--r1)) scale(1)}55%{transform:translate(calc(var(--mx)*-0.5),50vh) rotate(var(--r2)) scale(.95)}93%{opacity:calc(var(--op)*.5)}100%{opacity:0;transform:translate(var(--ex),102vh) rotate(calc(var(--r2) + 30deg)) scale(.85)}}
 
@@ -613,7 +613,7 @@ function submitRSVP(e){
       '--r2:'+c.r2,
     ].join(';');
     el.innerHTML = PETALS[i % PETALS.length];
-    document.body.appendChild(el);
+    document.querySelector('.hero').appendChild(el);
   });
 })();
 
