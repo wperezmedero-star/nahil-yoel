@@ -92,7 +92,8 @@ body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);over
 
 /* SECTIONS */
 section{padding:100px 8vw}
-.section-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--lila-deep);margin-bottom:14px}
+.section-tag{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--lila-deep);margin-bottom:14px}
+.section-tag::before,.section-tag::after{content:'';display:block;width:24px;height:1.5px;background:linear-gradient(90deg,var(--lila),var(--sky));border-radius:2px;opacity:.7}
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(38px,5.5vw,68px);line-height:.95;color:var(--ink)}
 .section-title em{font-style:italic;color:var(--lila-deep)}
 
@@ -142,9 +143,11 @@ section{padding:100px 8vw}
 .details-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:24px;margin-top:50px}
 .details-card{background:white;border-radius:36px;padding:50px;box-shadow:var(--shadow-soft);border:1px solid rgba(201,167,232,.25)}
 .detail-items{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
-.detail-item{padding:20px;border-radius:18px;background:var(--lila-soft);border:1px solid rgba(166,122,204,.15)}
-.detail-item label{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lila-deep);margin-bottom:6px}
-.detail-item strong{font-size:15px;font-weight:600}
+.detail-item{padding:18px 20px;border-radius:18px;background:var(--lila-soft);border:1px solid rgba(166,122,204,.15);display:flex;align-items:center;gap:14px;transition:transform .2s,box-shadow .2s}
+.detail-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+.detail-icon{font-size:22px;flex-shrink:0;width:42px;height:42px;display:grid;place-items:center;background:white;border-radius:12px;box-shadow:0 2px 10px rgba(166,122,204,.15)}
+.detail-item label{display:block;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lila-deep);margin-bottom:4px}
+.detail-item strong{font-size:14px;font-weight:600}
 .ring-photo{border-radius:36px;overflow:hidden;box-shadow:var(--shadow-soft)}
 .ring-photo img{width:100%;height:100%;object-fit:cover;display:block;min-height:380px}
 
@@ -237,7 +240,7 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
 
 <!-- NAV -->
 <header class="nav">
-  <div class="nav-brand">Nahil <span>&</span> Yoel</div>
+  <div class="nav-brand">Nahil <span>&</span> Yoel <em style="font-size:11px;font-weight:400;letter-spacing:.15em;opacity:.55;font-style:normal;margin-left:8px">21 · VIII · 2026</em></div>
   <nav class="nav-links">
     <a href="#historia" data-es="Historia" data-en="Story">Historia</a>
     <a href="#detalles" data-es="Detalles" data-en="Details">Detalles</a>
@@ -252,9 +255,12 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
 <div class="music-player">
   <audio id="audio" src="assets/sabes.mp3" loop></audio>
   <button class="play-btn" id="playBtn" onclick="toggleMusic()">
-    <svg id="playIcon" viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="playIcon" viewBox="0 0 24 24" width="15" height="15"><path d="M8 5v14l11-7z"/></svg>
   </button>
-  <div class="music-info"><strong>Sabes</strong><span>Reik</span></div>
+  <div class="music-info">
+    <strong>Sabes</strong>
+    <span>Reik · Nuestra canción 🎵</span>
+  </div>
   <div class="bars" id="bars">
     <span></span><span></span><span></span><span></span><span></span>
   </div>
@@ -368,13 +374,28 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
   <div class="details-grid">
     <div class="details-card">
       <div class="detail-items stagger">
-        <div class="detail-item"><label data-es="Fecha" data-en="Date">Fecha</label><strong data-es="Viernes, 21 de agosto de 2026" data-en="Friday, August 21, 2026">Viernes, 21 de agosto de 2026</strong></div>
-        <div class="detail-item"><label data-es="Hora" data-en="Time">Hora</label><strong>1:00 p.m.</strong></div>
-        <div class="detail-item"><label data-es="Lugar" data-en="Venue">Lugar</label><strong data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</strong></div>
-        <div class="detail-item"><label data-es="Dirección" data-en="Address">Dirección</label><strong>12600 SW 216th St,<br>Goulds, FL 33170</strong></div>
+        <div class="detail-item">
+          <div class="detail-icon">📅</div>
+          <div><label data-es="Fecha" data-en="Date">Fecha</label><strong data-es="Viernes, 21 de agosto de 2026" data-en="Friday, August 21, 2026">Viernes, 21 de agosto de 2026</strong></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">🕐</div>
+          <div><label data-es="Hora" data-en="Time">Hora</label><strong>1:00 p.m.</strong></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">🏛️</div>
+          <div><label data-es="Lugar" data-en="Venue">Lugar</label><strong data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</strong></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">📍</div>
+          <div><label data-es="Dirección" data-en="Address">Dirección</label><strong>12600 SW 216th St,<br>Goulds, FL 33170</strong></div>
+        </div>
       </div>
       <a class="btn btn-lila" target="_blank" href="https://www.google.com/maps/search/?api=1&query=12600+SW+216th+St+Goulds+FL+33170">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 1.5C7.1 1.5 4.75 3.85 4.75 6.75C4.75 10.69 10 18.5 10 18.5C10 18.5 15.25 10.69 15.25 6.75C15.25 3.85 12.9 1.5 10 1.5Z" fill="#a67acc" stroke="#a67acc" stroke-width=".5"/>
+  <circle cx="10" cy="6.75" r="2.25" fill="white"/>
+</svg>
         <span data-es="Ver en Google Maps" data-en="Open in Google Maps">Ver en Google Maps</span>
       </a>
     </div>
@@ -410,7 +431,14 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
     <h2 class="section-title">Comparte tus <em>fotos</em></h2>
     <p style="color:var(--muted);line-height:1.8;margin-top:18px" data-es="El 21 de agosto, sube aquí las fotos que tomes durante la celebración. Entre todos crearemos el álbum de recuerdos más especial." data-en="On August 21st, upload the photos you take during the celebration. Together we'll create the most special memory album.">El 21 de agosto, sube aquí las fotos que tomes durante la celebración. Entre todos crearemos el álbum de recuerdos más especial.</p>
     <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-      <svg viewBox="0 0 48 48" width="48" height="48" fill="none"><circle cx="24" cy="24" r="24" fill="#ede0f9"/><path d="M24 14v14M17 21l7-7 7 7" stroke="#a67acc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 34h20" stroke="#a67acc" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <svg viewBox="0 0 56 56" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="56" height="56" rx="16" fill="url(#upgrad)"/>
+  <defs><linearGradient id="upgrad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#d4a8f0"/><stop offset="1" stop-color="#a0c8f0"/></linearGradient></defs>
+  <path d="M28 36V22M22 28l6-7 6 7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="18" y="38" width="20" height="2.5" rx="1.25" fill="white" opacity=".9"/>
+  <rect x="14" y="14" width="6" height="6" rx="2" fill="white" opacity=".25"/>
+  <rect x="36" y="36" width="5" height="5" rx="1.5" fill="white" opacity=".2"/>
+</svg>
       <p data-es="Toca para seleccionar fotos · JPG, PNG" data-en="Tap to select photos · JPG, PNG">Toca para seleccionar fotos · JPG, PNG</p>
       <span class="btn btn-lila" data-es="Seleccionar fotos" data-en="Select photos">Seleccionar fotos</span>
       <input type="file" id="fileInput" accept="image/*" multiple onchange="handleUpload(event)"/>
@@ -438,7 +466,7 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
         <button type="submit" class="btn btn-primary">Enviar confirmación / Send confirmation</button>
       </form>
       <div class="rsvp-success" id="rsvpSuccess">
-        <span class="icon">💜</span>
+        <div style="width:64px;height:64px;background:linear-gradient(135deg,var(--lila),var(--sky));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px">💜</div>
         <h3 data-es="¡Gracias!" data-en="Thank you!">¡Gracias!</h3>
         <p data-es="Nahil y Yoel están felices de contar contigo en este día tan especial." data-en="Nahil and Yoel are happy to have you on this very special day.">Nahil y Yoel están felices de contar contigo en este día tan especial.</p>
       </div>
@@ -451,9 +479,19 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
   <div class="footer-bg"></div>
   <img class="footer-tulip" src="assets/tulip_bouquet.png" alt="tulipanes"/>
   <div class="footer-inner">
+    <div style="display:flex;justify-content:center;gap:12px;margin-bottom:28px;opacity:.5">
+      <svg viewBox="0 0 44 58" width="28" height="38"><defs><radialGradient id="fg1" cx="42%" cy="32%" r="62%"><stop offset="0%" stop-color="rgba(228,195,252,.96)"/><stop offset="100%" stop-color="rgba(186,120,232,.85)"/></radialGradient></defs><path d="M22 2 C36 8 44 22 44 35 C44 50 36 62 22 68 C8 62 0 50 0 35 C0 22 8 8 22 2Z" fill="url(#fg1)"/></svg>
+      <svg viewBox="0 0 44 58" width="22" height="30" style="margin-top:8px"><defs><radialGradient id="fg2" cx="42%" cy="32%" r="62%"><stop offset="0%" stop-color="rgba(210,233,253,.96)"/><stop offset="100%" stop-color="rgba(162,208,242,.85)"/></radialGradient></defs><path d="M22 2 C36 8 44 22 44 35 C44 50 36 62 22 68 C8 62 0 50 0 35 C0 22 8 8 22 2Z" fill="url(#fg2)"/></svg>
+      <svg viewBox="0 0 44 58" width="28" height="38"><defs><radialGradient id="fg3" cx="42%" cy="32%" r="62%"><stop offset="0%" stop-color="rgba(228,195,252,.96)"/><stop offset="100%" stop-color="rgba(186,120,232,.85)"/></radialGradient></defs><path d="M22 2 C36 8 44 22 44 35 C44 50 36 62 22 68 C8 62 0 50 0 35 C0 22 8 8 22 2Z" fill="url(#fg3)"/></svg>
+    </div>
     <div class="footer-names">Nahil <span>&</span> Yoel</div>
     <div class="footer-date">21 de agosto, 2026 · Goulds, Florida</div>
     <p class="footer-verse">"Las aguas embravecidas no pueden extinguir el amor"<br><em>Cantares 8:7</em></p>
+    <div style="margin-top:32px;display:flex;justify-content:center;gap:20px;opacity:.45">
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--lila)"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--sky)"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--lila)"></div>
+    </div>
   </div>
 </footer>
 
