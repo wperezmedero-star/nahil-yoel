@@ -76,6 +76,14 @@ to{transform:translate(40px,30px) scale(1.15)}}
   background:url('assets/hero.jpg') center 55%/cover no-repeat;
   flex-shrink:0;
 }
+@media(orientation:landscape){
+  .hero{ flex-direction:row; min-height:100svh; }
+  .hero-photo{ width:55%; height:100svh; background-position:center 40%; }
+  .hero-panel{ width:45%; justify-content:center; padding:30px 4vw; }
+}
+@media(max-width:600px){
+  .hero-photo{ height:55svh; background-position:center 50%; }
+}
 /* PANEL inferior — toda la información */
 .hero-panel{
   flex:1;
@@ -168,20 +176,63 @@ section{padding:100px 8vw}
 .detail-items{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
 .detail-item{padding:18px 20px;border-radius:18px;background:var(--lila-soft);border:1px solid rgba(166,122,204,.15);display:flex;align-items:center;gap:14px;transition:transform .2s,box-shadow .2s}
 .detail-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
-.detail-icon{font-size:22px;flex-shrink:0;width:42px;height:42px;display:grid;place-items:center;background:white;border-radius:12px;box-shadow:0 2px 10px rgba(166,122,204,.15)}
+.detail-icon{flex-shrink:0;width:44px;height:44px;display:grid;place-items:center;background:linear-gradient(135deg,var(--lila-soft),var(--sky-pale));border-radius:14px;box-shadow:0 4px 16px rgba(166,122,204,.18);border:1px solid rgba(166,122,204,.15)}
 .detail-item label{display:block;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lila-deep);margin-bottom:4px}
 .detail-item strong{font-size:14px;font-weight:600}
 .ring-photo{border-radius:36px;overflow:hidden;box-shadow:var(--shadow-soft)}
 .ring-photo img{width:100%;height:100%;object-fit:cover;display:block;min-height:380px}
 
 /* GALLERY */
-.gallery-section{background:white}
-.photo-grid{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.photo-grid .img-wrap{border-radius:24px;overflow:hidden;box-shadow:var(--shadow-soft);cursor:pointer}
-.photo-grid .img-wrap img{width:100%;object-fit:cover;display:block;transition:transform .4s cubic-bezier(.22,1,.36,1)}
-.photo-grid .img-wrap:hover img{transform:scale(1.06)}
-.photo-grid .img-wrap:nth-child(1) img,.photo-grid .img-wrap:nth-child(2) img,.photo-grid .img-wrap:nth-child(3) img{height:400px}
-.photo-grid .img-wrap:nth-child(4) img,.photo-grid .img-wrap:nth-child(5) img,.photo-grid .img-wrap:nth-child(6) img{height:300px}
+.gallery-section{background:linear-gradient(180deg,#fff 0%,var(--lila-soft) 100%)}
+
+/* Grid tipo magazine — masonry visual */
+.photo-grid{
+  margin-top:50px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:320px 240px;
+  gap:16px;
+}
+.photo-grid .img-wrap{
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 8px 30px rgba(120,60,180,.14);
+  cursor:pointer;position:relative;
+}
+/* Primera foto ocupa 2 filas */
+.photo-grid .img-wrap:nth-child(1){ grid-row:span 2; }
+/* Hover elegante */
+.photo-grid .img-wrap::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(166,122,204,.0),rgba(166,122,204,.55));
+  opacity:0;transition:opacity .35s ease;
+}
+.photo-grid .img-wrap:hover::after{ opacity:1; }
+.photo-grid .img-wrap img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+.photo-grid .img-wrap:hover img{ transform:scale(1.08); }
+
+/* Icono de ver en hover */
+.photo-grid .img-wrap .view-icon{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(.7);
+  opacity:0;z-index:2;
+  transition:all .3s ease;
+  width:48px;height:48px;
+  background:rgba(255,255,255,.9);
+  border-radius:50%;display:grid;place-items:center;
+}
+.photo-grid .img-wrap:hover .view-icon{ opacity:1;transform:translate(-50%,-50%) scale(1); }
+
+@media(max-width:860px){
+  .photo-grid{ grid-template-columns:repeat(2,1fr); grid-template-rows:240px 240px 240px; }
+  .photo-grid .img-wrap:nth-child(1){ grid-row:span 1; }
+}
+@media(max-width:500px){
+  .photo-grid{ grid-template-columns:1fr; grid-template-rows:auto; }
+  .photo-grid .img-wrap{ height:280px; }
+}
 
 /* LIGHTBOX */
 .lightbox{display:none;position:fixed;inset:0;z-index:300;background:rgba(10,5,20,.92);backdrop-filter:blur(10px);place-items:center}
@@ -406,19 +457,27 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
     <div class="details-card">
       <div class="detail-items stagger">
         <div class="detail-item">
-          <div class="detail-icon">📅</div>
+          <div class="detail-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#a67acc" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+          </div>
           <div><label data-es="Fecha" data-en="Date">Fecha</label><strong data-es="Viernes, 21 de agosto de 2026" data-en="Friday, August 21, 2026">Viernes, 21 de agosto de 2026</strong></div>
         </div>
         <div class="detail-item">
-          <div class="detail-icon">🕐</div>
+          <div class="detail-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#a67acc" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
           <div><label data-es="Hora" data-en="Time">Hora</label><strong>1:00 p.m.</strong></div>
         </div>
         <div class="detail-item">
-          <div class="detail-icon">🏛️</div>
+          <div class="detail-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#a67acc" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          </div>
           <div><label data-es="Lugar" data-en="Venue">Lugar</label><strong data-es="Salón del Reino" data-en="Kingdom Hall">Salón del Reino</strong></div>
         </div>
         <div class="detail-item">
-          <div class="detail-icon">📍</div>
+          <div class="detail-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#a67acc" stroke-width="1.8" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
           <div><label data-es="Dirección" data-en="Address">Dirección</label><strong>12600 SW 216th St,<br>Goulds, FL 33170</strong></div>
         </div>
       </div>
@@ -439,12 +498,30 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
   <span class="section-tag" data-es="Galería" data-en="Gallery">Galería</span>
   <h2 class="section-title">Recuerdos de <em>nuestra historia</em></h2>
   <div class="photo-grid stagger">
-    <div class="img-wrap" onclick="openLightbox('assets/formal_kingdom.jpg')"><img src="assets/formal_kingdom.jpg" alt="Salón del Reino"/></div>
-    <div class="img-wrap" onclick="openLightbox('assets/blue_dress.jpg')"><img src="assets/blue_dress.jpg" alt="Nahil y Yoel"/></div>
-    <div class="img-wrap" onclick="openLightbox('assets/hug.jpg')"><img src="assets/hug.jpg" alt="Abrazo"/></div>
-    <div class="img-wrap" onclick="openLightbox('assets/restaurant.jpg')"><img src="assets/restaurant.jpg" alt="Cena"/></div>
-    <div class="img-wrap" onclick="openLightbox('assets/engagement_hands.jpg')"><img src="assets/engagement_hands.jpg" alt="Anillos"/></div>
-    <div class="img-wrap" onclick="openLightbox('assets/love.jpg')"><img src="assets/love.jpg" alt="Amor"/></div>
+    <div class="img-wrap" onclick="openLightbox('assets/formal_kingdom.jpg')">
+      <img src="assets/formal_kingdom.jpg" alt="Salón del Reino"/>
+      <div class="view-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#a67acc" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+    </div>
+    <div class="img-wrap" onclick="openLightbox('assets/blue_dress.jpg')">
+      <img src="assets/blue_dress.jpg" alt="Nahil y Yoel"/>
+      <div class="view-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#a67acc" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+    </div>
+    <div class="img-wrap" onclick="openLightbox('assets/hug.jpg')">
+      <img src="assets/hug.jpg" alt="Abrazo"/>
+      <div class="view-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#a67acc" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+    </div>
+    <div class="img-wrap" onclick="openLightbox('assets/restaurant.jpg')">
+      <img src="assets/restaurant.jpg" alt="Cena"/>
+      <div class="view-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#a67acc" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+    </div>
+    <div class="img-wrap" onclick="openLightbox('assets/engagement_hands.jpg')">
+      <img src="assets/engagement_hands.jpg" alt="Anillos"/>
+      <div class="view-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#a67acc" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+    </div>
+    <div class="img-wrap" onclick="openLightbox('assets/love.jpg')">
+      <img src="assets/love.jpg" alt="Amor"/>
+      <div class="view-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#a67acc" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+    </div>
   </div>
 </section>
 
