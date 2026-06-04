@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Nahil & Yoel · 21 de agosto, 2026</title>
+<title>Yoel & Nahil · 21 de agosto, 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -330,7 +330,7 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
 
 <!-- NAV -->
 <header class="nav">
-  <div class="nav-brand">Nahil <span>&</span> Yoel <em style="font-size:11px;font-weight:400;letter-spacing:.15em;opacity:.55;font-style:normal;margin-left:8px">21 · VIII · 2026</em></div>
+  <div class="nav-brand">Yoel <span>&</span> Nahil <em style="font-size:11px;font-weight:400;letter-spacing:.15em;opacity:.55;font-style:normal;margin-left:8px">21 · VIII · 2026</em></div>
   <nav class="nav-links">
     <a href="#historia" data-es="Historia" data-en="Story">Historia</a>
     <a href="#detalles" data-es="Detalles" data-en="Details">Detalles</a>
@@ -599,7 +599,7 @@ footer{background:linear-gradient(135deg,#2d1847,#1a3060);color:white;text-align
     <div style="margin-bottom:24px">
       <img src="assets/tulip_hero.png" alt="tulipán" style="width:clamp(80px,12vw,130px);opacity:.85;filter:drop-shadow(0 4px 20px rgba(180,120,240,.4))"/>
     </div>
-    <div class="footer-names">Nahil <span>&</span> Yoel</div>
+    <div class="footer-names">Yoel <span>&</span> Nahil</div>
     <div class="footer-date">21 de agosto, 2026 · Goulds, Florida</div>
     <p class="footer-verse">"Las aguas embravecidas no pueden extinguir el amor"<br><em>Cantares 8:7</em></p>
     <div style="margin-top:32px;display:flex;justify-content:center;gap:20px;opacity:.45">
@@ -735,13 +735,11 @@ document.querySelectorAll('.reveal,.stagger').forEach(el=>obs.observe(el));
     var yoel  = document.getElementById('tw-yoel');
 
     // Primero Nahil (velocidad 110ms por letra)
-    typeWrite(nahil, 'Nahil', 110, function(){
-      // Aparece el & con fade
+    typeWrite(nahil, 'Yoel', 110, function(){
       setTimeout(function(){
         amp.classList.add('show');
-        // Luego Yoel
         setTimeout(function(){
-          typeWrite(yoel, 'Yoel', 110, null);
+          typeWrite(yoel, 'Nahil', 110, null);
         }, 400);
       }, 300);
     });
