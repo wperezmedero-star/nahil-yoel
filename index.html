@@ -77,17 +77,11 @@ to{transform:translate(40px,30px) scale(1.15)}}
   flex-shrink:0;
 }
 @media(orientation:landscape){
-  .hero{ flex-direction:row; min-height:100svh; padding-top:0; }
-  .hero-photo{ width:55%; height:100svh; background-position:center 40%; }
-  .hero-panel{ width:45%; justify-content:center; padding:80px 4vw 30px; overflow-y:auto; }
+  .hero{ height:100svh; }
+  .hero-photo{ background-position:center 30%; }
+  .hero-panel{ padding-bottom:28px; }
 }
-/* Tablet portrait: dar espacio al nav fixed */
-@media(min-width:601px) and (orientation:portrait){
-  .hero-photo{ margin-top:72px; height:calc(72svh - 72px); }
-}
-@media(max-width:600px){
-  .hero-photo{ height:55svh; background-position:center 50%; }
-}
+
 /* PANEL inferior — toda la información */
 .hero-panel{
   flex:1;
