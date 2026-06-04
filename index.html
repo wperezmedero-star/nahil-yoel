@@ -33,7 +33,11 @@ body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);over
 to{transform:translate(40px,30px) scale(1.15)}}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;backdrop-filter:blur(20px);background:rgba(255,250,255,.82);border-bottom:1px solid rgba(201,167,232,.2)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;backdrop-filter:blur(0px);background:rgba(255,250,255,0);border-bottom:1px solid rgba(201,167,232,0);transition:all .4s ease}
+.nav.scrolled{backdrop-filter:blur(20px);background:rgba(255,250,255,.92);border-bottom:1px solid rgba(201,167,232,.2)}
+.nav.scrolled .nav-brand,.nav.scrolled .nav-links a,.nav.scrolled .lang-btn{color:var(--lila-deep)}
+.nav .nav-brand,.nav .nav-links a{color:white}
+.nav .lang-btn{border-color:rgba(255,255,255,.5);color:white}
 .nav-brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--lila-deep)}
 .nav-brand span{color:var(--sky-deep)}
 .nav-links{display:flex;gap:24px}
@@ -702,6 +706,13 @@ function submitRSVP(e){
 }
 
 // pétalos eliminados
+
+// NAV SCROLL
+window.addEventListener('scroll', function(){
+  const nav = document.querySelector('.nav');
+  if(window.scrollY > 50){ nav.classList.add('scrolled'); }
+  else { nav.classList.remove('scrolled'); }
+}, {passive:true});
 
 // SCROLL REVEAL + PARALLAX STORY
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
