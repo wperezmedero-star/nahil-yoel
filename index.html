@@ -172,14 +172,14 @@ html{scroll-behavior:smooth}
 .petal{position:fixed;pointer-events:none;z-index:9999;opacity:0;will-change:transform,opacity;filter:drop-shadow(0 2px 4px rgba(140,70,180,.15))}
 @keyframes petal-drift{
   0%{opacity:0;transform:translateY(0) rotate(var(--r0)) translateX(0)}
-  7%{opacity:.38}
+  7%{opacity:.55}
   45%{transform:translateY(42vh) translateX(var(--mx)) rotate(var(--r1))}
-  90%{opacity:.28}
+  90%{opacity:.40}
   100%{opacity:0;transform:translateY(105vh) translateX(var(--ex)) rotate(var(--r2))}
 }
-/* Pétalos más pequeños y menos visibles en móvil */
+/* Pétalos en móvil: visibles pero discretos */
 @media(max-width:600px){
-  .petal{transform:scale(.65)!important;opacity:.25!important}
+  .petal{filter:drop-shadow(0 1px 3px rgba(140,70,180,.12))}
 }
 
 /* ===== BUTTONS ===== */
@@ -831,8 +831,11 @@ window.addEventListener('scroll',function(){
     {size:22,left:91, dur:26,delay:10,mx:'-7px',ex:'6px',  r0:'-20deg',r1:'25deg', r2:'72deg'},
     {size:30,left:3,  dur:21,delay:22,mx:'9px', ex:'-6px', r0:'8deg',  r1:'52deg', r2:'98deg'},
   ];
-  // En móvil reducir a solo 3 pétalos en los bordes
-  if(window.innerWidth<=600) configs=configs.slice(0,3);
+  // En móvil: 4 pétalos, tamaño un poco mayor para que se vean
+  if(window.innerWidth<=600){
+    configs=configs.slice(0,4);
+    configs=configs.map(function(c){return Object.assign({},c,{size:Math.round(c.size*1.3)});});
+  }
   configs.forEach(function(c,i){
     var el=document.createElement('div');
     el.className='petal';
