@@ -59,15 +59,16 @@ html{scroll-behavior:smooth}
 
 /* ===== MUSIC PLAYER ===== */
 .music-player{
-  position:fixed;bottom:22px;right:22px;z-index:8888;
-  display:flex;align-items:center;gap:9px;
-  padding:9px 15px;border-radius:999px;
-  background:rgba(255,252,255,.97);
-  backdrop-filter:blur(18px);
+  position:fixed;bottom:20px;right:20px;z-index:8888;
+  display:flex;align-items:center;gap:8px;
+  padding:8px 13px;border-radius:999px;
+  background:rgba(255,252,255,.90);
+  backdrop-filter:blur(16px);
   box-shadow:var(--shadow-lila);
-  border:1px solid rgba(202,168,255,.3);
+  border:1px solid rgba(202,168,255,.28);
   animation:slide-up .8s 1.5s ease both;
   transition:all .3s ease;
+  transform-origin:bottom right;
 }
 @keyframes slide-up{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
 .music-player.compact{padding:7px;border-radius:50%;width:46px;height:46px;justify-content:center}
@@ -98,10 +99,17 @@ html{scroll-behavior:smooth}
 }
 .hero-photo{
   position:absolute;inset:0;
-  background:url('assets/hero_full.png') center center/cover no-repeat;
+  background:url('assets/hero_full.png') 45% center/cover no-repeat;
   animation:hero-zoom 28s ease-in-out infinite alternate;
 }
 @keyframes hero-zoom{from{transform:scale(1)}to{transform:scale(1.03)}}
+/* Móvil: encuadre más centrado para mostrar ambos rostros */
+@media(max-width:600px){
+  .hero-photo{background-position:40% center;background-size:130%}
+}
+@media(min-width:601px) and (max-width:900px){
+  .hero-photo{background-position:42% center}
+}
 /* Overlay muy sutil — solo mejora legibilidad */
 .hero-overlay-grad{
   position:absolute;inset:0;z-index:1;
@@ -115,7 +123,7 @@ html{scroll-behavior:smooth}
 }
 /* Caja glassmorphism — siempre en zona oscura izquierda */
 .hero-panel{
-  position:absolute;left:5vw;bottom:7vh;
+  position:absolute;left:5vw;bottom:4vh;
   max-width:480px;z-index:3;
   padding:26px 30px;border-radius:24px;
   background:rgba(18,10,28,.82);
@@ -164,20 +172,25 @@ html{scroll-behavior:smooth}
 .petal{position:fixed;pointer-events:none;z-index:9999;opacity:0;will-change:transform,opacity;filter:drop-shadow(0 2px 4px rgba(140,70,180,.15))}
 @keyframes petal-drift{
   0%{opacity:0;transform:translateY(0) rotate(var(--r0)) translateX(0)}
-  7%{opacity:.72}
+  7%{opacity:.38}
   45%{transform:translateY(42vh) translateX(var(--mx)) rotate(var(--r1))}
-  90%{opacity:.5}
+  90%{opacity:.28}
   100%{opacity:0;transform:translateY(105vh) translateX(var(--ex)) rotate(var(--r2))}
+}
+/* Pétalos más pequeños y menos visibles en móvil */
+@media(max-width:600px){
+  .petal{transform:scale(.65)!important;opacity:.25!important}
 }
 
 /* ===== BUTTONS ===== */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  min-height:42px;padding:0 20px;border-radius:999px;
+  min-height:38px;padding:0 19px;border-radius:999px;
   font:600 12px/1 'Jost',sans-serif;letter-spacing:.06em;
   text-decoration:none;border:none;cursor:pointer;
-  transition:transform .25s,box-shadow .25s;
+  transition:transform .22s ease,box-shadow .22s ease,opacity .22s ease;
 }
+.btn:active{opacity:.85;transform:scale(.97)}
 .btn:hover{transform:translateY(-2px)}
 .btn-primary{
   background:linear-gradient(135deg,var(--lila),var(--sky));color:var(--ink);
@@ -192,7 +205,7 @@ html{scroll-behavior:smooth}
 .btn-outline{background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(8px)}
 
 /* ===== SECTIONS ===== */
-section{padding:120px 8vw}
+section{padding:100px 8vw}
 .section-tag{
   display:inline-flex;align-items:center;gap:10px;
   font-size:10px;font-weight:700;letter-spacing:.3em;
@@ -203,7 +216,7 @@ section{padding:120px 8vw}
 .section-title em{font-style:italic;color:var(--lila-deep)}
 
 /* ===== COUNTDOWN ===== */
-.countdown-section{text-align:center;background:linear-gradient(160deg,var(--lila-soft),var(--sky-pale));padding-top:80px}
+.countdown-section{text-align:center;background:linear-gradient(160deg,var(--lila-soft),var(--sky-pale));padding-top:50px;padding-bottom:80px}
 .countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:780px;margin:46px auto 0}
 .countdown-item{
   padding:26px 14px;border-radius:22px;background:white;
@@ -212,7 +225,12 @@ section{padding:120px 8vw}
 }
 .countdown-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--lila),var(--sky))}
 .countdown-item::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);animation:shimmer 3s ease-in-out infinite;pointer-events:none}
-.countdown-num{font-family:'Playfair Display',serif;font-size:50px;font-weight:700;color:var(--lila-deep);line-height:1;display:block}
+.countdown-num{
+  font-family:'Playfair Display',serif;font-size:50px;font-weight:700;
+  color:var(--lila-deep);line-height:1;display:block;
+  transition:transform .3s ease;
+}
+.countdown-item:hover .countdown-num{transform:scale(1.08)}
 .countdown-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:5px;display:block}
 
 /* ===== VERSE BANNER ===== */
@@ -341,7 +359,7 @@ footer{background:linear-gradient(135deg,#2a1248,#0f1a3a);color:white;text-align
   .nav-links{gap:28px}
 }
 @media(max-width:900px){
-  section{padding:80px 5vw}
+  section{padding:70px 5vw}
   .timeline{grid-template-columns:1fr}
   .rsvp-grid{grid-template-columns:1fr}
   .countdown-grid{grid-template-columns:repeat(2,1fr)}
@@ -803,15 +821,18 @@ window.addEventListener('scroll',function(){
     makePetal('rgba(200,155,240,.82)','rgba(235,210,255,.95)',3),
     makePetal('rgba(165,205,245,.80)','rgba(210,230,255,.92)',4),
   ];
+  // Pétalos solo en bordes — lejos de los rostros (que están en 30%-75% horizontal)
   var configs=[
-    {size:48,left:8, dur:18,delay:0, mx:'26px',ex:'-14px',r0:'12deg', r1:'58deg', r2:'108deg'},
-    {size:32,left:28,dur:22,delay:6, mx:'-20px',ex:'16px', r0:'-22deg',r1:'-70deg',r2:'-118deg'},
-    {size:42,left:52,dur:20,delay:12,mx:'22px',ex:'-18px',r0:'32deg', r1:'78deg', r2:'128deg'},
-    {size:28,left:72,dur:25,delay:3, mx:'-15px',ex:'20px', r0:'-42deg',r1:'-88deg',r2:'-138deg'},
-    {size:44,left:18,dur:19,delay:18,mx:'24px',ex:'-16px',r0:'20deg', r1:'66deg', r2:'116deg'},
-    {size:36,left:62,dur:23,delay:9, mx:'-18px',ex:'14px', r0:'-28deg',r1:'22deg', r2:'78deg'},
-    {size:38,left:85,dur:21,delay:15,mx:'20px',ex:'-20px',r0:'8deg',  r1:'54deg', r2:'104deg'},
+    {size:32,left:2,  dur:20,delay:0, mx:'8px', ex:'-5px', r0:'10deg', r1:'50deg', r2:'95deg'},
+    {size:24,left:7,  dur:25,delay:8, mx:'6px', ex:'-4px', r0:'-15deg',r1:'-55deg',r2:'-100deg'},
+    {size:28,left:88, dur:22,delay:4, mx:'-8px',ex:'6px',  r0:'25deg', r1:'70deg', r2:'115deg'},
+    {size:20,left:93, dur:28,delay:14,mx:'-6px',ex:'5px',  r0:'-30deg',r1:'-75deg',r2:'-120deg'},
+    {size:26,left:5,  dur:24,delay:18,mx:'7px', ex:'-5px', r0:'18deg', r1:'62deg', r2:'108deg'},
+    {size:22,left:91, dur:26,delay:10,mx:'-7px',ex:'6px',  r0:'-20deg',r1:'25deg', r2:'72deg'},
+    {size:30,left:3,  dur:21,delay:22,mx:'9px', ex:'-6px', r0:'8deg',  r1:'52deg', r2:'98deg'},
   ];
+  // En móvil reducir a solo 3 pétalos en los bordes
+  if(window.innerWidth<=600) configs=configs.slice(0,3);
   configs.forEach(function(c,i){
     var el=document.createElement('div');
     el.className='petal';
