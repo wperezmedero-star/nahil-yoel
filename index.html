@@ -442,8 +442,8 @@ footer{background:linear-gradient(135deg,#2a1248,#0f1a3a);color:white;text-align
       <span class="typewriter" id="tw-nahil"></span><em class="tw-amp" id="tw-amp"> & </em><span class="typewriter" id="tw-yoel"></span>
     </h1>
     <p class="hero-verse">
-      "Las aguas embravecidas no pueden extinguir el amor, ni pueden los ríos llevárselo con la corriente."
-      <cite>Cantares 8:7</cite>
+      <span data-es='"Las aguas embravecidas no pueden extinguir el amor, ni pueden los ríos llevárselo con la corriente."' data-en='"Many waters cannot quench love, neither can floods drown it."'>"Las aguas embravecidas no pueden extinguir el amor, ni pueden los ríos llevárselo con la corriente."</span>
+      <cite data-es="Cantares 8:7" data-en="Song of Solomon 8:7">Cantares 8:7</cite>
     </p>
     <div class="hero-date">
       <span data-es="Viernes" data-en="Friday">Viernes</span>
@@ -645,17 +645,17 @@ footer{background:linear-gradient(135deg,#2a1248,#0f1a3a);color:white;text-align
       <p data-es="Tu presencia es el mejor regalo. Confirma tu asistencia antes del 7 de agosto para que podamos recibirte con todo el amor." data-en="Your presence is the best gift. Please confirm before August 7th so we can welcome you with all our love.">Tu presencia es el mejor regalo. Confirma tu asistencia antes del 7 de agosto para que podamos recibirte con todo el amor.</p>
       <div style="margin-top:32px;padding:28px;background:linear-gradient(135deg,var(--lila-soft),var(--sky-pale));border-radius:24px;border:1px solid rgba(202,168,255,.25);text-align:center">
         <div style="font-size:36px;margin-bottom:10px">🌷</div>
-        <p style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--ink);line-height:1.5">"Las aguas embravecidas no pueden extinguir el amor"</p>
-        <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--lila-deep);margin-top:10px">Cantares 8:7</p>
+        <p style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--ink);line-height:1.5" data-es='"Las aguas embravecidas no pueden extinguir el amor"' data-en='"Many waters cannot quench love"'>"Las aguas embravecidas no pueden extinguir el amor"</p>
+        <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--lila-deep);margin-top:10px" data-es="Cantares 8:7" data-en="Song of Solomon 8:7">Cantares 8:7</p>
       </div>
     </div>
     <div>
       <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
-        <input type="text" name="Nombre" placeholder="Nombre completo / Full name" required/>
-        <input type="number" name="Personas" min="1" max="10" placeholder="Número de personas / Number of guests" required/>
-        <select name="Asistira" required><option value="" disabled selected>¿Asistirás? / Will you attend?</option><option value="Sí, asistirá 🎉">Sí, ahí estaré 🎉</option><option value="No podrá asistir">No podré asistir</option></select>
-        <textarea name="Mensaje" placeholder="Mensaje para Nahil y Yoel / Message for the couple"></textarea>
-        <button type="submit" class="btn btn-primary" id="rsvpBtn">Enviar confirmación / Send confirmation</button>
+        <input type="text" name="Nombre" placeholder="Nombre completo" data-ph-es="Nombre completo" data-ph-en="Full name" required/>
+        <input type="number" name="Personas" min="1" max="10" placeholder="Número de personas" data-ph-es="Número de personas" data-ph-en="Number of guests" required/>
+        <select name="Asistira" required><option value="" disabled selected data-es="¿Asistirás?" data-en="Will you attend?">¿Asistirás?</option><option value="Sí, asistirá 🎉" data-es="Sí, ahí estaré 🎉" data-en="Yes, I'll be there 🎉">Sí, ahí estaré 🎉</option><option value="No podrá asistir" data-es="No podré asistir" data-en="I can't attend">No podré asistir</option></select>
+        <textarea name="Mensaje" placeholder="Mensaje para Yoel y Nahil" data-ph-es="Mensaje para Yoel y Nahil" data-ph-en="Message for the couple"></textarea>
+        <button type="submit" class="btn btn-primary" id="rsvpBtn" data-es="Enviar confirmación 💜" data-en="Send confirmation 💜">Enviar confirmación 💜</button>
       </form>
       <div class="rsvp-success" id="rsvpSuccess">
         <div class="icon-circle">💜</div>
@@ -673,8 +673,8 @@ footer{background:linear-gradient(135deg,#2a1248,#0f1a3a);color:white;text-align
   <div class="footer-inner">
     <img class="footer-tulip-img" src="assets/tulip_hero.png" alt="tulipán"/>
     <div class="footer-names">Yoel <span>&</span> Nahil</div>
-    <div class="footer-date">21 de agosto, 2026 · Goulds, Florida</div>
-    <p class="footer-verse">"Las aguas embravecidas no pueden extinguir el amor"<br><em>Cantares 8:7</em></p>
+    <div class="footer-date" data-es="21 de agosto, 2026 · Goulds, Florida" data-en="August 21, 2026 · Goulds, Florida">21 de agosto, 2026 · Goulds, Florida</div>
+    <p class="footer-verse"><span data-es='"Las aguas embravecidas no pueden extinguir el amor"' data-en='"Many waters cannot quench love"'>"Las aguas embravecidas no pueden extinguir el amor"</span><br><em data-es="Cantares 8:7" data-en="Song of Solomon 8:7">Cantares 8:7</em></p>
     <div class="footer-dots">
       <div></div><div></div><div></div>
     </div>
@@ -691,6 +691,11 @@ function toggleLang(){
     const t=el.getAttribute('data-'+lang);
     if(t)el.textContent=t;
   });
+  document.querySelectorAll('[data-ph-es]').forEach(el=>{
+    const p=el.getAttribute('data-ph-'+lang);
+    if(p)el.placeholder=p;
+  });
+  document.documentElement.lang=lang;
 }
 
 // MÚSICA
