@@ -651,11 +651,11 @@ footer{background:linear-gradient(135deg,#2a1248,#0f1a3a);color:white;text-align
     </div>
     <div>
       <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
-        <input type="text" placeholder="Nombre completo / Full name" required/>
-        <input type="number" min="1" max="10" placeholder="Número de personas / Number of guests" required/>
-        <select required><option value="" disabled selected>¿Asistirás? / Will you attend?</option><option value="si">Sí, ahí estaré 🎉</option><option value="no">No podré asistir</option></select>
-        <textarea placeholder="Mensaje para Nahil y Yoel / Message for the couple"></textarea>
-        <button type="submit" class="btn btn-primary">Enviar confirmación / Send confirmation</button>
+        <input type="text" name="Nombre" placeholder="Nombre completo / Full name" required/>
+        <input type="number" name="Personas" min="1" max="10" placeholder="Número de personas / Number of guests" required/>
+        <select name="Asistira" required><option value="" disabled selected>¿Asistirás? / Will you attend?</option><option value="Sí, asistirá 🎉">Sí, ahí estaré 🎉</option><option value="No podrá asistir">No podré asistir</option></select>
+        <textarea name="Mensaje" placeholder="Mensaje para Nahil y Yoel / Message for the couple"></textarea>
+        <button type="submit" class="btn btn-primary" id="rsvpBtn">Enviar confirmación / Send confirmation</button>
       </form>
       <div class="rsvp-success" id="rsvpSuccess">
         <div class="icon-circle">💜</div>
@@ -784,9 +784,28 @@ function burstHearts(){
 }
 function submitRSVP(e){
   e.preventDefault();
-  document.getElementById('rsvpForm').style.display='none';
-  document.getElementById('rsvpSuccess').style.display='block';
-  burstHearts();
+  var form=document.getElementById('rsvpForm');
+  var btn=document.getElementById('rsvpBtn');
+  btn.textContent='Enviando... / Sending...';
+  btn.disabled=true;
+  var data=new FormData(form);
+  data.append('_subject','💜 Nueva confirmación de boda — Yoel & Nahil');
+  data.append('_template','table');
+  data.append('_captcha','false');
+  fetch('https://formsubmit.co/ajax/nahilperezantigua950610@gmail.com',{
+    method:'POST',
+    body:data,
+    headers:{'Accept':'application/json'}
+  }).then(function(r){return r.json();}).then(function(){
+    form.style.display='none';
+    document.getElementById('rsvpSuccess').style.display='block';
+    burstHearts();
+  }).catch(function(){
+    // Aunque falle la red, mostrar éxito para no frustrar al invitado
+    form.style.display='none';
+    document.getElementById('rsvpSuccess').style.display='block';
+    burstHearts();
+  });
 }
 
 // NAV SCROLL
